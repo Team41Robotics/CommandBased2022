@@ -83,8 +83,57 @@ public class ClimberSubsystem extends SubsystemBase{
     }
 
     /**
+     * Set the speed of the climber motors
+     * @param speed The speed of the climber motors
+     */
+    public static void setSpeed(double speed) {
+        motorSpeed = speed;
+        climbingMotor1.set(motorSpeed);
+        climbingMotor2.set(motorSpeed);
+    }
+
+    /**
+     * Toggle the Second Stage Gear Lock
+     */
+    public static void toggleSecondStageLock(){
+        if(secondStageGearLock.get() == DoubleSolenoid.Value.kForward){
+            secondStageGearLock.set(DoubleSolenoid.Value.kReverse);
+        } else {
+            secondStageGearLock.set(DoubleSolenoid.Value.kForward);
+        }
+    }
+
+    /**
+     * Toggle the First Stage Gear Lock
+     */
+    public static void toggleFirstStageLock(){
+        if(firstStageGearLock.get() == DoubleSolenoid.Value.kReverse){
+            firstStageGearLock.set(DoubleSolenoid.Value.kForward);
+        } else {
+            firstStageGearLock.set(DoubleSolenoid.Value.kReverse);
+        }
+    }
+
+    public static void toggleSecondStageRelease(){
+        if(secondStageRelease.get() == DoubleSolenoid.Value.kForward){
+            secondStageRelease.set(DoubleSolenoid.Value.kReverse);
+        } else {
+            secondStageRelease.set(DoubleSolenoid.Value.kForward);
+        }
+    }
+
+    public static void toggleGearShifter(){
+        if(gearShifter.get() == Value.kForward){
+            gearShifter.set(Value.kReverse);
+        } else {
+            gearShifter.set(Value.kForward);
+        }
+    }
+
+    /**
      * Conduct the climbing process using the joysticks and bottom touchscreen, with control being decided by a toggle switch
      */
+    /** 
     public static void teleop() {
         if (driverStation.getRawButton(Controls.SecondDriverStation.MANUAL_CLIMBING_TOGGLE)) {
             if (leftJoy.getRawButton(Controls.LeftJoy.CLIMB_FWD)) {
@@ -157,7 +206,7 @@ public class ClimberSubsystem extends SubsystemBase{
         climbingMotor1.set(motorSpeed);
         climbingMotor2.set(motorSpeed);
     }
-
+*/
     /**
      * Get the value of the leftmost limit switch
      * @return the value of the switch
