@@ -44,7 +44,7 @@ public class Robot extends TimedRobot {
     public static Joystick leftJoy = new Joystick(driverStationPorts.LEFT_JOY);
     public static Joystick rightJoy = new Joystick(driverStationPorts.RIGHT_JOY);
     public static Joystick secondDS = new Joystick(driverStationPorts.RIGHT_DRIVER_STATION);
-    public static JoystickButton interuptButton = new JoystickButton(secondDS, 1)
+    public static JoystickButton interuptButton = new JoystickButton(secondDS, 1);
 
   /**
    * This function is run when the robot is first started up and should be used for any
