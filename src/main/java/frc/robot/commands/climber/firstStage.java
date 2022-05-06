@@ -7,11 +7,12 @@ package frc.robot.commands.climber;
 import frc.robot.subsystems.ClimberSubsystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotMap.driverStation.SecondDriverStation;
+import frc.robot.Robot;
 
 /** An example command that uses an example subsystem. */
 public class firstStage extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-  private final ClimberSubsystem climber;
+
 
   /**
    * Creates a new ExampleCommand.
@@ -19,9 +20,8 @@ public class firstStage extends CommandBase {
    * @param subsystem The subsystem used by this command.
    */
   public firstStage() {
-    climber = new ClimberSubsystem();
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(climber);
+    addRequirements(Climber);
   }
 
   // Called when the command is initially scheduled.
