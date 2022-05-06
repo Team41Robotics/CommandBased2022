@@ -129,7 +129,28 @@ public class ClimberSubsystem extends SubsystemBase{
             gearShifter.set(Value.kForward);
         }
     }
-
+    
+    public static void lockFirstStage(boolean forward){
+        if(forward){
+            firstStageGearLock.set(DoubleSolenoid.Value.kForward)
+        } else {
+            firstStageGearLock.set(DoubleSolenoid.Value.kReverse)
+        }
+    }
+    public static void lockSecondStage(boolean forward){
+        if(forward){
+            secondStageGearLock.set(DoubleSolenoid.Value.kForward)
+        } else {
+            secondStageGearLock.set(DoubleSolenoid.Value.kReverse)
+        }
+    }
+    public static void setGearShifter(boolean forward){
+        if(forward){
+            gearShifter.set(DoubleSolenoid.Value.kForward)
+        } else {
+           gearShifter.set(DoubleSolenoid.Value.kReverse)
+        }
+    }
     /**
      * Conduct the climbing process using the joysticks and bottom touchscreen, with control being decided by a toggle switch
      */
