@@ -13,7 +13,7 @@ import frc.robot.Robot;
 public class firstStage extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
 
-
+  private ClimberSubsystem climber;
   /**
    * Creates a new ExampleCommand.
    *
@@ -21,12 +21,15 @@ public class firstStage extends CommandBase {
    */
   public firstStage() {
     // Use addRequirements() here to declare subsystem dependencies.
+    climber = Robot.Climber;
     addRequirements(Robot.Climber);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    climber.toggleGearShifter();
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
@@ -41,6 +44,6 @@ public class firstStage extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return true;
   }
 }
