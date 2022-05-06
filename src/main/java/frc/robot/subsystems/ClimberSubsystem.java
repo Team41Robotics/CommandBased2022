@@ -132,23 +132,23 @@ public class ClimberSubsystem extends SubsystemBase{
     
     public static void lockFirstStage(boolean forward){
         if(forward){
-            firstStageGearLock.set(DoubleSolenoid.Value.kForward)
+            firstStageGearLock.set(DoubleSolenoid.Value.kForward);
         } else {
-            firstStageGearLock.set(DoubleSolenoid.Value.kReverse)
+            firstStageGearLock.set(DoubleSolenoid.Value.kReverse);
         }
     }
     public static void lockSecondStage(boolean forward){
         if(forward){
-            secondStageGearLock.set(DoubleSolenoid.Value.kForward)
+            secondStageGearLock.set(DoubleSolenoid.Value.kForward);
         } else {
-            secondStageGearLock.set(DoubleSolenoid.Value.kReverse)
+            secondStageGearLock.set(DoubleSolenoid.Value.kReverse);
         }
     }
     public static void setGearShifter(boolean forward){
         if(forward){
-            gearShifter.set(DoubleSolenoid.Value.kForward)
+            gearShifter.set(DoubleSolenoid.Value.kForward);
         } else {
-           gearShifter.set(DoubleSolenoid.Value.kReverse)
+           gearShifter.set(DoubleSolenoid.Value.kReverse);
         }
     }
     /**
