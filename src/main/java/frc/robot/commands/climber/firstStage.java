@@ -22,7 +22,7 @@ public class firstStage extends CommandBase {
   public firstStage() {
     // Use addRequirements() here to declare subsystem dependencies.
     climber = Robot.Climber;
-    addRequirements(Robot.Climber);
+    addRequirements(climber);
   }
 
   // Called when the command is initially scheduled.
