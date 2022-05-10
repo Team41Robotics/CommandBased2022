@@ -36,7 +36,6 @@ import frc.robot.RobotMap.driverStation.*;
  * project.
  */
 public class Robot extends TimedRobot {
-  private Command firstStage;
 
   /* Subsystems */
   public static ClimberSubsystem Climber = new ClimberSubsystem();
@@ -54,6 +53,7 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     buttonBindings();
+    ClimberSubsystem.initClimber();
   }
 
   /**
@@ -110,7 +110,12 @@ public class Robot extends TimedRobot {
 
   /** This function is called periodically during test mode. */
   @Override
-  public void testPeriodic() {}
+  public void testPeriodic() {
+    System.out.print(ClimberSubsystem.getLSwitch());
+    System.out.print(ClimberSubsystem.getMSwitch());
+    System.out.print(ClimberSubsystem.getRSwitch());
+    System.out.println(ClimberSubsystem.getSecondMSwitch());
+  }
 
   /** This function is called once when the robot is first started up. */
   @Override

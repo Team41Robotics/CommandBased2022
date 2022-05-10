@@ -7,7 +7,7 @@ public final class RobotMap {
         public static double CLIMBING_DRIVING_SPEED_OFFSET = 4e-4;
         public static double CLIMBING_MAX_SPEED = 0.85;
         public static double CLIMBING_SPEED_SECOND_STAGE = 0.6;
-        public static double CLIMBING_SLOW_SPEED = 0.4;
+        public static double CLIMBING_SLOW_SPEED = 0.2;
         public static double JOYSTICK_CURVE_POWER = 3; // x^3 function
         public static double JOYSTICK_DEADZONE = 0.1;
         public static double JOYSTICK_CLIMBING_MODE_DEADZONE = 0.001;

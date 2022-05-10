@@ -123,6 +123,7 @@ public class ClimberSubsystem extends SubsystemBase{
     }
 
     public static void toggleGearShifter(){
+        System.out.println("here");
         if(gearShifter.get() == Value.kForward){
             gearShifter.set(Value.kReverse);
         } else {

@@ -8,12 +8,13 @@ import frc.robot.subsystems.ClimberSubsystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotMap.driverStation.SecondDriverStation;
 import frc.robot.Robot;
+import frc.robot.RobotMap.Climber;
 
 /** An example command that uses an example subsystem. */
 public class firstStage extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
 
-  private ClimberSubsystem climber;
+
   /**
    * Creates a new ExampleCommand.
    *
@@ -21,29 +22,32 @@ public class firstStage extends CommandBase {
    */
   public firstStage() {
     // Use addRequirements() here to declare subsystem dependencies.
-    climber = Robot.Climber;
-    addRequirements(climber);
+
+    addRequirements(Robot.Climber);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    climber.toggleGearShifter();
+    ClimberSubsystem.reset();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-      System.out.println("first stage");
+      ClimberSubsystem.setSpeed(-Climber.CLIMBING_SLOW_SPEED);
+      System.out.println(ClimberSubsystem.getLSwitch());
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    ClimberSubsystem.setSpeed(0);
+  }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return true;
+    return !(ClimberSubsystem.getLSwitch() && ClimberSubsystem.getRSwitch());
   }
 }
