@@ -6,8 +6,10 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.SparkMaxRelativeEncoder;
 
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
@@ -37,6 +39,8 @@ public class ClimberSubsystem extends SubsystemBase{
     private static DoubleSolenoid secondStageGearLock, firstStageGearLock, secondStageRelease , gearShifter; // secondStageRelease is second stage piston
     private static Joystick leftJoy;
     private static Joystick driverStation;
+    private static RelativeEncoder climbingEncoder1;
+    private static RelativeEncoder climbingEncoder2;
 
     /**
      * Create a new object for controlling the climber on the robot
@@ -51,7 +55,8 @@ public class ClimberSubsystem extends SubsystemBase{
         firstStageGearLock = new DoubleSolenoid(Climber.PCM_PORT, PneumaticsModuleType.REVPH, Climber.OUTER_GEAR_LOCK_OFF, Climber.OUTER_GEAR_LOCK_ON);
         secondStageRelease = new DoubleSolenoid(Climber.PCM_PORT, PneumaticsModuleType.REVPH, Climber.MIDDLE_ARM_LOCK, Climber.MIDDLE_ARM_RELEASE);
         gearShifter = new DoubleSolenoid(Climber.PCM_PORT, PneumaticsModuleType.REVPH, Climber.MOVE_TO_OUTER_ARMS, Climber.MOVE_TO_INNER_ARM);
-
+        climbingEncoder1 = climbingMotor1.getEncoder();
+        climbingEncoder2 = climbingMotor2.getEncoder();
 
         firstStageUp = false;
         secondStageUp = false;
@@ -130,7 +135,15 @@ public class ClimberSubsystem extends SubsystemBase{
             gearShifter.set(Value.kForward);
         }
     }
+
+    public static void resetEncoders(int position){
+        climbingEncoder1.setPosition(position);
+        climbingEncoder2.setPosition(position);
+    }
     
+    public static double getEncoder(){
+        return climbingEncoder1.getPosition();
+    }
     public static void lockFirstStage(boolean forward){
         if(forward){
             firstStageGearLock.set(DoubleSolenoid.Value.kForward);

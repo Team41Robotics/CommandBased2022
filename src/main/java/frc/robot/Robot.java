@@ -20,14 +20,14 @@ import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.RobotState;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.button.*;
-
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.commands.climber.*;
 import frc.robot.RobotMap.*;
 import frc.robot.triggers.*;
 import frc.robot.RobotMap.driverStation.*;
-
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -128,6 +128,14 @@ public class Robot extends TimedRobot {
 
   private void buttonBindings() {
   new POVTrigger(45, secondDS, SecondDriverStation.CLIMBING_STATE_POV)
+  .whenActive(new SequentialCommandGroup(
+    new firstStage(),
+    new WaitCommand(2.5),
+    new secondStage())
+    );
+  /*new POVTrigger(45, secondDS, SecondDriverStation.CLIMBING_STATE_POV)
   .whenActive(new firstStage().until(interuptButton::get)); 
+  new POVTrigger(90, secondDS, SecondDriverStation.CLIMBING_STATE_POV)
+  .whenActive(new secondStage().until(interuptButton::get)); */
   }
 }

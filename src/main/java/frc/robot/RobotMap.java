@@ -70,7 +70,7 @@ public final class RobotMap {
         public static int INTAKE_REVERSE = 3;
     }
     }
-    public static class driverStationPorts {
+    public static final class driverStationPorts {
     static int LEFT_JOY = 0;
     static int RIGHT_JOY = 1;
     static int CLIMBING_DRIVE_BUTTON = 2;
