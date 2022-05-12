@@ -8,7 +8,7 @@ import frc.robot.subsystems.ClimberSubsystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotMap.driverStation.SecondDriverStation;
 import frc.robot.Robot;
-import frc.robot.RobotMap.Climber;
+import frc.robot.RobotMap.CLIMBER;
 
 
 /** An example command that uses an example subsystem. */
@@ -35,7 +35,7 @@ public class thirdStage extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    ClimberSubsystem.setSpeed(-Climber.CLIMBING_SLOW_SPEED);
+    ClimberSubsystem.setSpeed(-CLIMBER.CLIMBING_SLOW_SPEED);
 
   }
 

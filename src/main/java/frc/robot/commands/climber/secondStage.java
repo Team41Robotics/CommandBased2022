@@ -8,7 +8,7 @@ import frc.robot.subsystems.ClimberSubsystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotMap.driverStation.SecondDriverStation;
 import frc.robot.Robot;
-import frc.robot.RobotMap.Climber;
+import frc.robot.RobotMap.CLIMBER;
 import edu.wpi.first.wpilibj.Joystick;
 import frc.robot.RobotMap.driverStation.LeftJoy;
 
@@ -40,7 +40,7 @@ public class secondStage extends CommandBase {
   @Override
   public void execute() {
 
-  ClimberSubsystem.setSpeed(Climber.CLIMBING_SLOW_SPEED);
+  ClimberSubsystem.setSpeed(CLIMBER.CLIMBING_SLOW_SPEED);
   }  
 
   // Called once the command ends or is interrupted.

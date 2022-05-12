@@ -7,6 +7,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -18,11 +19,11 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.RobotState;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.button.*;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 import frc.robot.subsystems.ClimberSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.commands.climber.*;
 import frc.robot.RobotMap.*;
 import frc.robot.triggers.*;
@@ -39,7 +40,7 @@ public class Robot extends TimedRobot {
 
   /* Subsystems */
   public static ClimberSubsystem Climber = new ClimberSubsystem();
-
+  public static IntakeSubsystem Intake = new IntakeSubsystem();
   /* Buttons */
     public static Joystick leftJoy = new Joystick(driverStationPorts.LEFT_JOY);
     public static Joystick rightJoy = new Joystick(driverStationPorts.RIGHT_JOY);
@@ -140,6 +141,8 @@ public class Robot extends TimedRobot {
     new fifthStage()
     ).until(interuptButton::get)
     );
+
+    new JoystickButton(leftJoy, LeftJoy.INTAKE_PISTON_TOGGLE).toggleWhenPressed(new InstantCommand(IntakeSubsystem::putUp));
   /*new POVTrigger(45, secondDS, SecondDriverStation.CLIMBING_STATE_POV)
   .whenActive(new firstStage().until(interuptButton::get)); 
   new POVTrigger(90, secondDS, SecondDriverStation.CLIMBING_STATE_POV)

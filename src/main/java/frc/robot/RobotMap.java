@@ -1,7 +1,7 @@
 package frc.robot;
 
 public final class RobotMap {
-    public static final class Climber {
+    public static final class CLIMBER {
 
         public static double CLIMBING_DRIVE_MAX_SPEED = 0.4;
         public static double CLIMBING_DRIVING_SPEED_OFFSET = 4e-4;
@@ -32,6 +32,22 @@ public final class RobotMap {
         public static int FIRST_STAGE_LIMIT_SWITCH_L = 0;
         public static int FIRST_STAGE_LIMIT_SWTICH_M = 3;
         public static int SECOND_STAGE_LIMIT_SWITCH = 5;
+
+    }
+    public static final class INTAKE{
+        public static int INTAKE_MOTOR = 11;
+        public static int CONVEYOR_MOTOR = 3;
+        public static int FEEDER_MOTOR = 4;
+        public static int ELEVATOR_MOTOR = 6;
+        public static double INTAKE_FULL_SPEED = 0.6;
+        public static double CONVEYOR_FULL_SPEED = 0.5;
+        public static double FEEDER_FULL_SPEED = 0.5;
+        public static double ELEVATOR_FULL_SPEED = -0.25;
+        public static int PCM_PORT = 12;
+        public static int LEFT_SOL_FWD = 3;
+        public static int LEFT_SOL_RV = 12;
+        public static int RIGHT_SOL_FWD = 2;
+        public static int RIGHT_SOL_RV = 13;
 
     }
     public static final class driverStation{
@@ -75,5 +91,11 @@ public final class RobotMap {
     static int RIGHT_JOY = 1;
     static int CLIMBING_DRIVE_BUTTON = 2;
     static int RIGHT_DRIVER_STATION= 2;
+    }
+
+    public enum INTAKE_MODE {
+        FORWARD,
+        REVERSE,
+        OFF
     }
 }
