@@ -131,7 +131,14 @@ public class Robot extends TimedRobot {
   .whenActive(new SequentialCommandGroup(
     new firstStage(),
     new WaitCommand(2.5),
-    new secondStage())
+    new secondStage(),
+    new WaitCommand(1),
+    new thirdStage(),
+    new WaitCommand(0.5),
+    new fourthStage(),
+    new WaitCommand(2.5),
+    new fifthStage()
+    ).until(interuptButton::get)
     );
   /*new POVTrigger(45, secondDS, SecondDriverStation.CLIMBING_STATE_POV)
   .whenActive(new firstStage().until(interuptButton::get)); 

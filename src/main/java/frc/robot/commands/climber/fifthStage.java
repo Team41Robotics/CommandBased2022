@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import frc.robot.RobotMap.driverStation.LeftJoy;
 
 /** An example command that uses an example subsystem. */
-public class secondStage extends CommandBase {
+public class fifthStage extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private static Joystick leftJoy = new Joystick(0);
 
@@ -23,7 +23,7 @@ public class secondStage extends CommandBase {
    *
    * @param subsystem The subsystem used by this command.
    */
-  public secondStage() {
+  public fifthStage() {
     // Use addRequirements() here to declare subsystem dependencies.
 
     addRequirements(Robot.Climber);
@@ -32,14 +32,20 @@ public class secondStage extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    ClimberSubsystem.reset();
-    ClimberSubsystem.resetEncoders(0);
+   ClimberSubsystem.resetEncoders(0);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-
+  /*  if (leftJoy.getRawButton(LeftJoy.CLIMB_FWD)) {
+      ClimberSubsystem.setSpeed(Climber.CLIMBING_SLOW_SPEED);
+  } else if (leftJoy.getRawButton(LeftJoy.CLIMB_RV)) {
+    ClimberSubsystem.setSpeed(-Climber.CLIMBING_SLOW_SPEED);
+  } else {
+    ClimberSubsystem.setSpeed(0);
+  */
+  System.out.println(ClimberSubsystem.getEncoder());
   ClimberSubsystem.setSpeed(Climber.CLIMBING_SLOW_SPEED);
   }  
 
@@ -47,16 +53,14 @@ public class secondStage extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     System.out.println("ended");
+    ClimberSubsystem.toggleSecondStageLock();
     ClimberSubsystem.setSpeed(0);
-    ClimberSubsystem.lockFirstStage(true);
-    ClimberSubsystem.lockSecondStage(false);
-    ClimberSubsystem.toggleGearShifter();
-
+    
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return ClimberSubsystem.getEncoder()>90;
+    return ClimberSubsystem.getEncoder()>30;
   }
 }
