@@ -17,7 +17,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Joystick;
 
-import frc.robot.RobotMap.Climber;
+import frc.robot.RobotMap.CLIMBER;
 
 /** Pistons:
  *      <ul>
@@ -46,15 +46,15 @@ public class ClimberSubsystem extends SubsystemBase{
      * Create a new object for controlling the climber on the robot
      */
     public static void initClimber() {
-        climbingMotor1 = new CANSparkMax(Climber.CLIMBING_SPARK_F, MotorType.kBrushless);
-        climbingMotor2 = new CANSparkMax(Climber.CLIMBING_SPARK_B, MotorType.kBrushless);
+        climbingMotor1 = new CANSparkMax(CLIMBER.CLIMBING_SPARK_F, MotorType.kBrushless);
+        climbingMotor2 = new CANSparkMax(CLIMBER.CLIMBING_SPARK_B, MotorType.kBrushless);
         climbingMotor1.setIdleMode(IdleMode.kBrake);
         climbingMotor2.setIdleMode(IdleMode.kBrake);
         
-        secondStageGearLock = new DoubleSolenoid(Climber.PCM_PORT, PneumaticsModuleType.REVPH, Climber.INNER_GEAR_LOCK_OFF, Climber.INNER_GEAR_LOCK_ON);
-        firstStageGearLock = new DoubleSolenoid(Climber.PCM_PORT, PneumaticsModuleType.REVPH, Climber.OUTER_GEAR_LOCK_OFF, Climber.OUTER_GEAR_LOCK_ON);
-        secondStageRelease = new DoubleSolenoid(Climber.PCM_PORT, PneumaticsModuleType.REVPH, Climber.MIDDLE_ARM_LOCK, Climber.MIDDLE_ARM_RELEASE);
-        gearShifter = new DoubleSolenoid(Climber.PCM_PORT, PneumaticsModuleType.REVPH, Climber.MOVE_TO_OUTER_ARMS, Climber.MOVE_TO_INNER_ARM);
+        secondStageGearLock = new DoubleSolenoid(CLIMBER.PCM_PORT, PneumaticsModuleType.REVPH, CLIMBER.INNER_GEAR_LOCK_OFF, CLIMBER.INNER_GEAR_LOCK_ON);
+        firstStageGearLock = new DoubleSolenoid(CLIMBER.PCM_PORT, PneumaticsModuleType.REVPH, CLIMBER.OUTER_GEAR_LOCK_OFF, CLIMBER.OUTER_GEAR_LOCK_ON);
+        secondStageRelease = new DoubleSolenoid(CLIMBER.PCM_PORT, PneumaticsModuleType.REVPH, CLIMBER.MIDDLE_ARM_LOCK, CLIMBER.MIDDLE_ARM_RELEASE);
+        gearShifter = new DoubleSolenoid(CLIMBER.PCM_PORT, PneumaticsModuleType.REVPH, CLIMBER.MOVE_TO_OUTER_ARMS, CLIMBER.MOVE_TO_INNER_ARM);
         climbingEncoder1 = climbingMotor1.getEncoder();
         climbingEncoder2 = climbingMotor2.getEncoder();
 
@@ -66,10 +66,10 @@ public class ClimberSubsystem extends SubsystemBase{
         firstStageGearLock.set(DoubleSolenoid.Value.kReverse);
         gearShifter.set(Value.kForward);  
 
-        firstStageLeftSwitch = new DigitalInput(Climber.FIRST_STAGE_LIMIT_SWITCH_L);
-        firstStageRightSwitch = new DigitalInput(Climber.FIRST_STAGE_LIMIT_SWITCH_R);
-        secondStageSecondSwitch = new DigitalInput(Climber.FIRST_STAGE_LIMIT_SWTICH_M);
-        secondStageSwitch = new DigitalInput(Climber.SECOND_STAGE_LIMIT_SWITCH);
+        firstStageLeftSwitch = new DigitalInput(CLIMBER.FIRST_STAGE_LIMIT_SWITCH_L);
+        firstStageRightSwitch = new DigitalInput(CLIMBER.FIRST_STAGE_LIMIT_SWITCH_R);
+        secondStageSecondSwitch = new DigitalInput(CLIMBER.FIRST_STAGE_LIMIT_SWTICH_M);
+        secondStageSwitch = new DigitalInput(CLIMBER.SECOND_STAGE_LIMIT_SWITCH);
         
         climbing = false;
     }
