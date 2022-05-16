@@ -1,5 +1,7 @@
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
@@ -8,6 +10,8 @@ import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap.INTAKE;
 import frc.robot.RobotMap.INTAKE_MODE;
+import frc.robot.RobotMap.driverStationPorts;
+import frc.robot.RobotMap.driverStation;
 
 import com.revrobotics.CANSparkMax;
 import frc.robot.Robot;
@@ -17,14 +21,14 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 /**
 * Controls the intake on the robot 
 */
-public class IntakeSubsystem {
+public class IntakeSubsystem extends SubsystemBase{
     private static boolean intakeOn;
     private static boolean intakeUp;
     private static CANSparkMax intakeMotor, conveyor;
     private static DoubleSolenoid intakeSolLeft;
     private static DoubleSolenoid intakeSolRight;
     private static Joystick leftJoy, rightJoy, secondDS;
-    
+    public static INTAKE_MODE direction;
     /**
     * Initialize all parts of the intake
     */
@@ -41,6 +45,8 @@ public class IntakeSubsystem {
         intakeSolLeft = new DoubleSolenoid(INTAKE.PCM_PORT, PneumaticsModuleType.REVPH, INTAKE.LEFT_SOL_FWD, INTAKE.LEFT_SOL_RV);
         intakeSolRight = new DoubleSolenoid(INTAKE.PCM_PORT, PneumaticsModuleType.REVPH, INTAKE.RIGHT_SOL_FWD, INTAKE.RIGHT_SOL_RV);
         SmartDashboard.putBoolean("Intake On", false);
+        intakeSolLeft.set(DoubleSolenoid.Value.kForward);
+        intakeSolRight.set(DoubleSolenoid.Value.kForward);
     }
     
     /**
@@ -57,26 +63,21 @@ public class IntakeSubsystem {
     /**
     * In teleop, use joystick triggers to raise/lower the intake and toggle the motor
     */
-    public static void teleop(){
-        /*
-        if (Shooter.reverseOn) {
-            conveyor.set( INTAKE.CONVEYOR_FULL_SPEED);
-            intakeMotor.set( INTAKE.INTAKE_FULL_SPEED);
-        } else if (rightJoy.getRawButtonPressed(Controls.RightJoy.INTAKE_TOGGLE)) {
+    public static void runIntakeSystem(){
+        
+        if (rightJoy.getRawButtonPressed(driverStation.RightJoy.INTAKE_TOGGLE)) {
             intakeUp = !intakeUp;
             intakeSolLeft.set(intakeUp ? DoubleSolenoid.Value.kForward : DoubleSolenoid.Value.kReverse);
             intakeSolRight.set(intakeUp ? DoubleSolenoid.Value.kForward : DoubleSolenoid.Value.kReverse);
             intakeOn = !intakeOn;
             run(intakeOn ? INTAKE_MODE.FORWARD : INTAKE_MODE.OFF);
-        } else if (secondDS.getRawButton(Controls.SecondDriverStation.FEED_BALL_TO_SHOOTER)) {
-            conveyor.set INTAKE.CONVEYOR_FULL_SPEED);
+        } else if (secondDS.getRawButton(driverStation.SecondDriverStation.FEED_BALL_TO_SHOOTER)) {
+            conveyor.set(INTAKE.CONVEYOR_FULL_SPEED);
         } else if (!intakeOn) {
             conveyor.set(0);
             intakeMotor.set(0);
         }
-        
-        SmartDashboard.putBoolean("Intake On", intakeOn);
-        */
+
         
     }
     
@@ -153,6 +154,20 @@ public class IntakeSubsystem {
             putDown();
         }
     }
+
+    public static void toggleMotors(){
+        if(direction == INTAKE_MODE.FORWARD){
+            direction = INTAKE_MODE.OFF;
+        }
+        if(direction == INTAKE_MODE.OFF){
+            direction = INTAKE_MODE.REVERSE;
+        }else{
+            direction = INTAKE_MODE.FORWARD;
+        }
+        run(direction);
+
+    }
+
     /**
     * Reset the intake to a known position and state
     */

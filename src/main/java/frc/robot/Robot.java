@@ -8,6 +8,8 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.PerpetualCommand;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -55,6 +57,7 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     buttonBindings();
     ClimberSubsystem.initClimber();
+    IntakeSubsystem.initIntake();
   }
 
   /**
@@ -142,8 +145,12 @@ public class Robot extends TimedRobot {
     ).until(interuptButton::get)
     );
 
-    new JoystickButton(leftJoy, LeftJoy.INTAKE_PISTON_TOGGLE).toggleWhenPressed(new InstantCommand(IntakeSubsystem::putUp));
-  /*new POVTrigger(45, secondDS, SecondDriverStation.CLIMBING_STATE_POV)
+    //new JoystickButton(leftJoy, LeftJoy.INTAKE_PISTON_TOGGLE)
+    //.toggleWhenPressed(new InstantCommand(IntakeSubsystem::toggle, Intake));
+    Intake.setDefaultCommand(new RunCommand(IntakeSubsystem::runIntakeSystem, Intake));
+    //new JoystickButton(rightJoy, 1)
+    //.whenActive(new InstantCommand(IntakeSubsystem::toggleMotors,Intake));
+  /*new POVTrigger(45, secondDS, SecondDriverStation.CLIMBING_STATE_POV
   .whenActive(new firstStage().until(interuptButton::get)); 
   new POVTrigger(90, secondDS, SecondDriverStation.CLIMBING_STATE_POV)
   .whenActive(new secondStage().until(interuptButton::get)); */

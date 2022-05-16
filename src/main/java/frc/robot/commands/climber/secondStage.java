@@ -6,16 +6,12 @@ package frc.robot.commands.climber;
 
 import frc.robot.subsystems.ClimberSubsystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.RobotMap.driverStation.SecondDriverStation;
 import frc.robot.Robot;
 import frc.robot.RobotMap.CLIMBER;
-import edu.wpi.first.wpilibj.Joystick;
-import frc.robot.RobotMap.driverStation.LeftJoy;
 
 /** An example command that uses an example subsystem. */
 public class secondStage extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-  private static Joystick leftJoy = new Joystick(0);
 
 
   /**
