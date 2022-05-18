@@ -9,13 +9,11 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-import com.revrobotics.SparkMaxRelativeEncoder;
 
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.Joystick;
 
 import frc.robot.RobotMap.CLIMBER;
 
@@ -29,16 +27,16 @@ import frc.robot.RobotMap.CLIMBER;
  */
 public class ClimberSubsystem extends SubsystemBase{
     public static boolean climbing;
-    private static boolean firstStageUp, secondStageUp;
+    //private static boolean firstStageUp, secondStageUp;
     private static int climbingState;
     private static double motorSpeed;
-    private static long startTime;
+    //private static long startTime;
     private static CANSparkMax climbingMotor1;
     private static CANSparkMax climbingMotor2;
     private static DigitalInput firstStageLeftSwitch, firstStageRightSwitch, secondStageSwitch, secondStageSecondSwitch;
     private static DoubleSolenoid secondStageGearLock, firstStageGearLock, secondStageRelease , gearShifter; // secondStageRelease is second stage piston
-    private static Joystick leftJoy;
-    private static Joystick driverStation;
+    //private static Joystick leftJoy;
+    //private static Joystick driverStation;
     private static RelativeEncoder climbingEncoder1;
     private static RelativeEncoder climbingEncoder2;
 
@@ -58,8 +56,8 @@ public class ClimberSubsystem extends SubsystemBase{
         climbingEncoder1 = climbingMotor1.getEncoder();
         climbingEncoder2 = climbingMotor2.getEncoder();
 
-        firstStageUp = false;
-        secondStageUp = false;
+        //firstStageUp = false;
+        //secondStageUp = false;
 
         secondStageGearLock.set(DoubleSolenoid.Value.kForward);
         secondStageRelease.set(DoubleSolenoid.Value.kForward);
@@ -82,8 +80,8 @@ public class ClimberSubsystem extends SubsystemBase{
         secondStageRelease.set(DoubleSolenoid.Value.kForward);
         firstStageGearLock.set(DoubleSolenoid.Value.kReverse);
         gearShifter.set(Value.kForward); 
-        firstStageUp = false; 
-        secondStageUp = false;
+        //firstStageUp = false; 
+        //secondStageUp = false;
         climbing = false;
     }
 
@@ -168,8 +166,9 @@ public class ClimberSubsystem extends SubsystemBase{
     /**
      * Conduct the climbing process using the joysticks and bottom touchscreen, with control being decided by a toggle switch
      */
-    /** 
+    
     public static void teleop() {
+        /*
         if (driverStation.getRawButton(Controls.SecondDriverStation.MANUAL_CLIMBING_TOGGLE)) {
             if (leftJoy.getRawButton(Controls.LeftJoy.CLIMB_FWD)) {
                 motorSpeed = Climber.CLIMBING_MAX_SPEED;
@@ -240,8 +239,8 @@ public class ClimberSubsystem extends SubsystemBase{
         }
         climbingMotor1.set(motorSpeed);
         climbingMotor2.set(motorSpeed);
+        */
     }
-*/
     /**
      * Get the value of the leftmost limit switch
      * @return the value of the switch
