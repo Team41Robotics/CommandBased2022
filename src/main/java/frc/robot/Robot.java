@@ -9,8 +9,6 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.RobotController;
-import edu.wpi.first.wpilibj.RobotState;
 import edu.wpi.first.wpilibj2.command.button.*;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
@@ -24,9 +22,12 @@ import frc.robot.RobotMap.driverStation.*;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 /**
- * The VM is configured to automatically run this class, and to call the functions corresponding to
- * each mode, as described in the TimedRobot documentation. If you change the name of this class or
- * the package after creating this project, you must also update the build.gradle file in the
+ * The VM is configured to automatically run this class, and to call the
+ * functions corresponding to
+ * each mode, as described in the TimedRobot documentation. If you change the
+ * name of this class or
+ * the package after creating this project, you must also update the
+ * build.gradle file in the
  * project.
  */
 public class Robot extends TimedRobot {
@@ -35,13 +36,14 @@ public class Robot extends TimedRobot {
   public static ClimberSubsystem Climber = new ClimberSubsystem();
   public static IntakeSubsystem Intake = new IntakeSubsystem();
   /* Buttons */
-    public static Joystick leftJoy = new Joystick(driverStationPorts.LEFT_JOY);
-    public static Joystick rightJoy = new Joystick(driverStationPorts.RIGHT_JOY);
-    public static Joystick secondDS = new Joystick(driverStationPorts.RIGHT_DRIVER_STATION);
-    public static JoystickButton interuptButton = new JoystickButton(secondDS, 1);
+  public static Joystick leftJoy = new Joystick(driverStationPorts.LEFT_JOY);
+  public static Joystick rightJoy = new Joystick(driverStationPorts.RIGHT_JOY);
+  public static Joystick secondDS = new Joystick(driverStationPorts.RIGHT_DRIVER_STATION);
+  public static JoystickButton interuptButton = new JoystickButton(secondDS, 1);
 
   /**
-   * This function is run when the robot is first started up and should be used for any
+   * This function is run when the robot is first started up and should be used
+   * for any
    * initialization co
    */
   @Override
@@ -52,29 +54,40 @@ public class Robot extends TimedRobot {
   }
 
   /**
-   * This function is called every 20 ms, no matter the mode. Use this for items like diagnostics
+   * This function is called every 20 ms, no matter the mode. Use this for items
+   * like diagnostics
    * that you want ran during disabled, autonomous, teleoperated and test.
    *
-   * <p>This runs after the mode specific periodic functions, but before LiveWindow and
+   * <p>
+   * This runs after the mode specific periodic functions, but before LiveWindow
+   * and
    * SmartDashboard integrated updating.
    */
   @Override
   public void robotPeriodic() {
-    // Runs the Scheduler.  This is responsible for polling buttons, adding newly-scheduled
-    // commands, running already-scheduled commands, removing finished or interrupted commands,
-    // and running subsystem periodic() methods.  This must be called from the robot's periodic
+    // Runs the Scheduler. This is responsible for polling buttons, adding
+    // newly-scheduled
+    // commands, running already-scheduled commands, removing finished or
+    // interrupted commands,
+    // and running subsystem periodic() methods. This must be called from the
+    // robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
   @Override
-  public void disabledInit() {}
+  public void disabledInit() {
+  }
 
   @Override
-  public void disabledPeriodic() {}
+  public void disabledPeriodic() {
+  }
 
-  /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
+  /**
+   * This autonomous runs the autonomous command selected by your
+   * {@link RobotContainer} class.
+   */
   @Override
   public void autonomousInit() {
 
@@ -82,7 +95,8 @@ public class Robot extends TimedRobot {
 
   /** This function is called periodically during autonomous. */
   @Override
-  public void autonomousPeriodic() {}
+  public void autonomousPeriodic() {
+  }
 
   @Override
   public void teleopInit() {
@@ -95,7 +109,8 @@ public class Robot extends TimedRobot {
 
   /** This function is called periodically during operator control. */
   @Override
-  public void teleopPeriodic() {}
+  public void teleopPeriodic() {
+  }
 
   @Override
   public void testInit() {
@@ -114,37 +129,38 @@ public class Robot extends TimedRobot {
 
   /** This function is called once when the robot is first started up. */
   @Override
-  public void simulationInit() {}
+  public void simulationInit() {
+  }
 
   /** This function is called periodically whilst in simulation. */
   @Override
-  public void simulationPeriodic() {}
-
+  public void simulationPeriodic() {
+  }
 
   private void buttonBindings() {
-  new POVTrigger(45, secondDS, SecondDriverStation.CLIMBING_STATE_POV)
-  .whenActive(new SequentialCommandGroup(
-    new firstStage(),
-    new WaitCommand(2.5),
-    new secondStage(),
-    new WaitCommand(1),
-    new thirdStage(),
-    new WaitCommand(0.5),
-    new fourthStage(),
-    new WaitCommand(2.5),
-    new fifthStage()
-    ).until(interuptButton::get)
-    );
+    new POVTrigger(45, secondDS, SecondDriverStation.CLIMBING_STATE_POV)
+        .whenActive(new SequentialCommandGroup(
+            new firstStage(),
+            new WaitCommand(2.5),
+            new secondStage(),
+            new WaitCommand(1),
+            new thirdStage(),
+            new WaitCommand(0.5),
+            new fourthStage(),
+            new WaitCommand(2.5),
+            new fifthStage()).until(interuptButton::get));
 
     new JoystickButton(leftJoy, LeftJoy.INTAKE_PISTON_TOGGLE)
-    .toggleWhenPressed(new InstantCommand(IntakeSubsystem::toggle, Intake));
+        .toggleWhenPressed(new InstantCommand(IntakeSubsystem::toggle, Intake));
     new JoystickButton(rightJoy, 1)
-    .whenActive(new InstantCommand(IntakeSubsystem::toggleMotors,Intake));
+        .whenActive(new InstantCommand(IntakeSubsystem::toggleMotors, Intake));
     new JoystickButton(rightJoy, RightJoy.INTAKE_REVERSE)
-    .whileActiveOnce(new intakeReverse());
-  /*new POVTrigger(45, secondDS, SecondDriverStation.CLIMBING_STATE_POV
-  .whenActive(new firstStage().until(interuptButton::get)); 
-  new POVTrigger(90, secondDS, SecondDriverStation.CLIMBING_STATE_POV)
-  .whenActive(new secondStage().until(interuptButton::get)); */
+        .whileActiveOnce(new intakeReverse());
+    /*
+     * new POVTrigger(45, secondDS, SecondDriverStation.CLIMBING_STATE_POV
+     * .whenActive(new firstStage().until(interuptButton::get));
+     * new POVTrigger(90, secondDS, SecondDriverStation.CLIMBING_STATE_POV)
+     * .whenActive(new secondStage().until(interuptButton::get));
+     */
   }
 }

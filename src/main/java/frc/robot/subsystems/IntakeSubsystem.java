@@ -2,7 +2,6 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
@@ -13,7 +12,6 @@ import frc.robot.RobotMap.INTAKE_MODE;
 
 
 import com.revrobotics.CANSparkMax;
-import frc.robot.Robot;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
@@ -22,21 +20,21 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 */
 public class IntakeSubsystem extends SubsystemBase{
     private static boolean intakeOn;
-    private static boolean intakeUp;
+    //private static boolean intakeUp;
     private static CANSparkMax intakeMotor, conveyor;
     private static DoubleSolenoid intakeSolLeft;
     private static DoubleSolenoid intakeSolRight;
-    private static Joystick leftJoy, rightJoy, secondDS;
+    //private static Joystick leftJoy, rightJoy, secondDS;
     public static INTAKE_MODE direction;
     /**
     * Initialize all parts of the intake
     */
     public static void initIntake(){
         intakeOn = false;
-        intakeUp = false;
+/*      intakeUp = false;
         leftJoy = Robot.leftJoy;
         rightJoy = Robot.rightJoy;
-        secondDS = Robot.secondDS;
+        secondDS = Robot.secondDS; */
         intakeMotor = new CANSparkMax(INTAKE.INTAKE_MOTOR, MotorType.kBrushless);
         conveyor = new CANSparkMax(INTAKE.CONVEYOR_MOTOR, MotorType.kBrushless);
         conveyor.setInverted(true);
@@ -54,7 +52,7 @@ public class IntakeSubsystem extends SubsystemBase{
     public static void autonInit(){
         intakeSolLeft.set(DoubleSolenoid.Value.kForward);
         intakeSolRight.set(DoubleSolenoid.Value.kForward);
-        intakeUp = true;
+        //intakeUp = true;
         intakeMotor.set(INTAKE.INTAKE_FULL_SPEED);
         conveyor.set(INTAKE.CONVEYOR_FULL_SPEED);
     }
@@ -152,7 +150,7 @@ public class IntakeSubsystem extends SubsystemBase{
         putUp();
         stop();
         intakeOn = false;
-        intakeUp = false;
+        //intakeUp = false;
     }
     
     /**
