@@ -6,7 +6,6 @@ package frc.robot.commands.climber;
 
 import frc.robot.subsystems.ClimberSubsystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.RobotMap.driverStation.SecondDriverStation;
 import frc.robot.Robot;
 import frc.robot.RobotMap.CLIMBER;
 

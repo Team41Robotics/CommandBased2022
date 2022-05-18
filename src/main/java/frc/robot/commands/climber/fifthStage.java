@@ -6,16 +6,12 @@ package frc.robot.commands.climber;
 
 import frc.robot.subsystems.ClimberSubsystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.RobotMap.driverStation.SecondDriverStation;
 import frc.robot.Robot;
 import frc.robot.RobotMap.CLIMBER;
-import edu.wpi.first.wpilibj.Joystick;
-import frc.robot.RobotMap.driverStation.LeftJoy;
 
 /** An example command that uses an example subsystem. */
 public class fifthStage extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-  private static Joystick leftJoy = new Joystick(0);
 
 
   /**
@@ -38,13 +34,7 @@ public class fifthStage extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-  /*  if (leftJoy.getRawButton(LeftJoy.CLIMB_FWD)) {
-      ClimberSubsystem.setSpeed(Climber.CLIMBING_SLOW_SPEED);
-  } else if (leftJoy.getRawButton(LeftJoy.CLIMB_RV)) {
-    ClimberSubsystem.setSpeed(-Climber.CLIMBING_SLOW_SPEED);
-  } else {
-    ClimberSubsystem.setSpeed(0);
-  */
+
   System.out.println(ClimberSubsystem.getEncoder());
   ClimberSubsystem.setSpeed(CLIMBER.CLIMBING_SLOW_SPEED);
   }  

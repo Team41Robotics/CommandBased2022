@@ -10,8 +10,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap.INTAKE;
 import frc.robot.RobotMap.INTAKE_MODE;
-import frc.robot.RobotMap.driverStationPorts;
-import frc.robot.RobotMap.driverStation;
+
 
 import com.revrobotics.CANSparkMax;
 import frc.robot.Robot;
@@ -63,23 +62,7 @@ public class IntakeSubsystem extends SubsystemBase{
     /**
     * In teleop, use joystick triggers to raise/lower the intake and toggle the motor
     */
-    public static void runIntakeSystem(){
-        
-        if (rightJoy.getRawButtonPressed(driverStation.RightJoy.INTAKE_TOGGLE)) {
-            intakeUp = !intakeUp;
-            intakeSolLeft.set(intakeUp ? DoubleSolenoid.Value.kForward : DoubleSolenoid.Value.kReverse);
-            intakeSolRight.set(intakeUp ? DoubleSolenoid.Value.kForward : DoubleSolenoid.Value.kReverse);
-            intakeOn = !intakeOn;
-            run(intakeOn ? INTAKE_MODE.FORWARD : INTAKE_MODE.OFF);
-        } else if (secondDS.getRawButton(driverStation.SecondDriverStation.FEED_BALL_TO_SHOOTER)) {
-            conveyor.set(INTAKE.CONVEYOR_FULL_SPEED);
-        } else if (!intakeOn) {
-            conveyor.set(0);
-            intakeMotor.set(0);
-        }
 
-        
-    }
     
     /**
     * Place to put intake test code
@@ -156,17 +139,11 @@ public class IntakeSubsystem extends SubsystemBase{
     }
 
     public static void toggleMotors(){
-        if(direction == INTAKE_MODE.FORWARD){
-            direction = INTAKE_MODE.OFF;
-        }
-        if(direction == INTAKE_MODE.OFF){
-            direction = INTAKE_MODE.REVERSE;
-        }else{
-            direction = INTAKE_MODE.FORWARD;
-        }
-        run(direction);
+        intakeOn = !intakeOn;
+        run(intakeOn ? direction : INTAKE_MODE.OFF);
 
     }
+
 
     /**
     * Reset the intake to a known position and state

@@ -5,19 +5,9 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.PerpetualCommand;
-import edu.wpi.first.wpilibj2.command.RunCommand;
-import edu.wpi.first.wpilibj.DriverStation.Alliance;
-import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.DriverStation;
+
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.RobotState;
@@ -27,6 +17,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.commands.climber.*;
+import frc.robot.commands.intake.intakeReverse;
 import frc.robot.RobotMap.*;
 import frc.robot.triggers.*;
 import frc.robot.RobotMap.driverStation.*;
@@ -145,11 +136,12 @@ public class Robot extends TimedRobot {
     ).until(interuptButton::get)
     );
 
-    //new JoystickButton(leftJoy, LeftJoy.INTAKE_PISTON_TOGGLE)
-    //.toggleWhenPressed(new InstantCommand(IntakeSubsystem::toggle, Intake));
-    Intake.setDefaultCommand(new RunCommand(IntakeSubsystem::runIntakeSystem, Intake));
-    //new JoystickButton(rightJoy, 1)
-    //.whenActive(new InstantCommand(IntakeSubsystem::toggleMotors,Intake));
+    new JoystickButton(leftJoy, LeftJoy.INTAKE_PISTON_TOGGLE)
+    .toggleWhenPressed(new InstantCommand(IntakeSubsystem::toggle, Intake));
+    new JoystickButton(rightJoy, 1)
+    .whenActive(new InstantCommand(IntakeSubsystem::toggleMotors,Intake));
+    new JoystickButton(rightJoy, RightJoy.INTAKE_REVERSE)
+    .whileActiveOnce(new intakeReverse());
   /*new POVTrigger(45, secondDS, SecondDriverStation.CLIMBING_STATE_POV
   .whenActive(new firstStage().until(interuptButton::get)); 
   new POVTrigger(90, secondDS, SecondDriverStation.CLIMBING_STATE_POV)
