@@ -13,8 +13,10 @@ import edu.wpi.first.wpilibj2.command.button.*;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 import frc.robot.subsystems.ClimberSubsystem;
+import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.commands.climber.*;
+import frc.robot.commands.drivetrain.drive;
 import frc.robot.commands.intake.intakeReverse;
 import frc.robot.RobotMap.*;
 import frc.robot.triggers.*;
@@ -35,6 +37,7 @@ public class Robot extends TimedRobot {
   /* Subsystems */
   public static ClimberSubsystem Climber = new ClimberSubsystem();
   public static IntakeSubsystem Intake = new IntakeSubsystem();
+  public static DrivetrainSubsystem Drivetrain = new DrivetrainSubsystem();
   /* Buttons */
   public static Joystick leftJoy = new Joystick(driverStationPorts.LEFT_JOY);
   public static Joystick rightJoy = new Joystick(driverStationPorts.RIGHT_JOY);
@@ -138,6 +141,7 @@ public class Robot extends TimedRobot {
   }
 
   private void buttonBindings() {
+    Drivetrain.setDefaultCommand(new drive());
     new POVTrigger(45, secondDS, SecondDriverStation.CLIMBING_STATE_POV)
         .whenActive(new SequentialCommandGroup(
             new firstStage(),
