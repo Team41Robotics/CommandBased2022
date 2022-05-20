@@ -33,17 +33,6 @@ jobs:
     - name: Compile and run tests on robot code
       run: ./gradlew build
 
-
-name: Continuous Integration
-
-# This action works with pull requests and pushes
-on:
-  pull_request:
-  push:
-    branches:
-      - main
-
-jobs:
   prettier:
     runs-on: ubuntu-latest
 
