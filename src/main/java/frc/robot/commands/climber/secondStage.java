@@ -36,7 +36,7 @@ public class secondStage extends CommandBase {
   @Override
   public void execute() {
 
-  ClimberSubsystem.setSpeed(CLIMBER.CLIMBING_SLOW_SPEED);
+  ClimberSubsystem.setSpeed(CLIMBER.CLIMBING_SPEED_SECOND_STAGE);
   }  
 
   // Called once the command ends or is interrupted.

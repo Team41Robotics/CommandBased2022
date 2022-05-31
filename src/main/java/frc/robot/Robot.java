@@ -7,7 +7,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-
+import edu.wpi.first.wpilibj2.command.PerpetualCommand;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.button.*;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -51,9 +51,10 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
-    buttonBindings();
     ClimberSubsystem.initClimber();
     IntakeSubsystem.initIntake();
+    DrivetrainSubsystem.initDrivetrain();
+    buttonBindings();
   }
 
   /**
@@ -142,6 +143,7 @@ public class Robot extends TimedRobot {
 
   private void buttonBindings() {
     Drivetrain.setDefaultCommand(new drive());
+    Intake.setDefaultCommand(new PerpetualCommand(new InstantCommand(IntakeSubsystem::run, Intake)));
     new POVTrigger(45, secondDS, SecondDriverStation.CLIMBING_STATE_POV)
         .whenActive(new SequentialCommandGroup(
             new firstStage(),
@@ -155,7 +157,7 @@ public class Robot extends TimedRobot {
             new fifthStage()).until(interuptButton::get));
 
     new JoystickButton(leftJoy, LeftJoy.INTAKE_PISTON_TOGGLE)
-        .toggleWhenPressed(new InstantCommand(IntakeSubsystem::toggle, Intake));
+        .whenActive(new InstantCommand(IntakeSubsystem::toggle, Intake));
     new JoystickButton(rightJoy, 1)
         .whenActive(new InstantCommand(IntakeSubsystem::toggleMotors, Intake));
     new JoystickButton(rightJoy, RightJoy.INTAKE_REVERSE)

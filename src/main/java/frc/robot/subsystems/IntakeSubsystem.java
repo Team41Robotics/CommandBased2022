@@ -44,6 +44,7 @@ public class IntakeSubsystem extends SubsystemBase{
         SmartDashboard.putBoolean("Intake On", false);
         intakeSolLeft.set(DoubleSolenoid.Value.kForward);
         intakeSolRight.set(DoubleSolenoid.Value.kForward);
+        direction = INTAKE_MODE.FORWARD;
     }
     
     /**
@@ -83,19 +84,24 @@ public class IntakeSubsystem extends SubsystemBase{
     * Run the intake and conveyor
     * @param dir the direction to run the intake (enum)
     */
-    public static void run(INTAKE_MODE dir) {
-        switch (dir) {
+    public static void run() {
+        System.out.println(direction);
+        if(intakeOn){
+        switch (direction) {
             case FORWARD:
             intakeMotor.set(INTAKE.INTAKE_FULL_SPEED);
             conveyor.set(INTAKE.CONVEYOR_FULL_SPEED);
             break;
             case REVERSE:
-            intakeMotor.set( INTAKE.INTAKE_FULL_SPEED);
-            conveyor.set( INTAKE.CONVEYOR_FULL_SPEED);
-            case OFF:
+            intakeMotor.set(-INTAKE.INTAKE_FULL_SPEED);
+            conveyor.set(-INTAKE.CONVEYOR_FULL_SPEED);
+
+        }
+    }
+        else{
             intakeMotor.set(0);
             conveyor.set(0);
-        }
+    }
     }
    
     /**
@@ -138,8 +144,7 @@ public class IntakeSubsystem extends SubsystemBase{
 
     public static void toggleMotors(){
         intakeOn = !intakeOn;
-        run(intakeOn ? direction : INTAKE_MODE.OFF);
-
+        System.out.println(intakeOn);
     }
 
 

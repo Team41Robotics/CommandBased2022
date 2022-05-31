@@ -34,7 +34,7 @@ public class firstStage extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    ClimberSubsystem.setSpeed(-CLIMBER.CLIMBING_SLOW_SPEED);
+    ClimberSubsystem.setSpeed(-CLIMBER.CLIMBING_MAX_SPEED);
 
   }
 
