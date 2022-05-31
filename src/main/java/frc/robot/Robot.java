@@ -143,7 +143,7 @@ public class Robot extends TimedRobot {
 
   private void buttonBindings() {
     Drivetrain.setDefaultCommand(new drive());
-    Intake.setDefaultCommand(new PerpetualCommand(new InstantCommand(IntakeSubsystem::run, Intake)));
+    Intake.setDefaultCommand(new RunCommand(IntakeSubsystem::run, Intake)));
     new POVTrigger(45, secondDS, SecondDriverStation.CLIMBING_STATE_POV)
         .whenActive(new SequentialCommandGroup(
             new firstStage(),
