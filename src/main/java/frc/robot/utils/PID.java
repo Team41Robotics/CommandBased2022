@@ -4,7 +4,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 
 import edu.wpi.first.networktables.NetworkTable;
-import frc.robot.RobotMap.shooter;
+import frc.robot.RobotMap.ShooterConstants;;
 
 /**
  * Custom class to handle PID on our Falcon 500s
@@ -111,7 +111,7 @@ public class PID {
         double reqDeltaSpeed = speed-currSpeed;
         time = currentTime;
         //throws out deltaT if it is too large, happens during startup
-        if (deltaT > shooter.PID_ERROR) {
+        if (deltaT > ShooterConstants.PID_ERROR) {
             System.out.println("deltaT is too big");
             return;
         }
@@ -202,7 +202,7 @@ public class PID {
      * @return Whether the PID has basically reached its target
      */
     public boolean isReady() {
-        return err < shooter.PID_MIN_ERR;
+        return err < ShooterConstants.PID_MIN_ERR;
     }
 
     /**

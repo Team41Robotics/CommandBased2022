@@ -15,10 +15,13 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.DrivetrainSubsystem;
+import frc.robot.subsystems.HoodSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.commands.climber.*;
 import frc.robot.commands.drivetrain.drive;
 import frc.robot.commands.intake.intakeReverse;
+import frc.robot.commands.shooter.AutoShoot;
 import frc.robot.RobotMap.*;
 import frc.robot.triggers.*;
 import frc.robot.RobotMap.driverStation.*;
@@ -39,6 +42,8 @@ public class Robot extends TimedRobot {
   public static ClimberSubsystem Climber = new ClimberSubsystem();
   public static IntakeSubsystem Intake = new IntakeSubsystem();
   public static DrivetrainSubsystem Drivetrain = new DrivetrainSubsystem();
+  public static ShooterSubsystem Shooter = new ShooterSubsystem();
+  public static HoodSubsystem Hood = new HoodSubsystem();
   /* Buttons */
   public static Joystick leftJoy = new Joystick(driverStationPorts.LEFT_JOY);
   public static Joystick rightJoy = new Joystick(driverStationPorts.RIGHT_JOY);
@@ -56,6 +61,8 @@ public class Robot extends TimedRobot {
     IntakeSubsystem.initIntake();
     DrivetrainSubsystem.initDrivetrain();
     buttonBindings();
+    ShooterSubsystem.initShooter();
+    HoodSubsystem.initHood();
   }
 
   /**
@@ -105,10 +112,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
-    // This makes sure that the autonomous stops running when
-    // teleop starts running. If you want the autonomous to
-    // continue until interrupted by another command, remove
-    // this line or comment it out.
+    HoodSubsystem.home();
 
   }
 
@@ -163,6 +167,8 @@ public class Robot extends TimedRobot {
         .whenActive(new InstantCommand(IntakeSubsystem::toggleMotors, Intake));
     new JoystickButton(rightJoy, RightJoy.INTAKE_REVERSE)
         .whileActiveOnce(new intakeReverse());
+
+    new JoystickButton(secondDS, 1).whenActive(new AutoShoot());
     /*
      * new POVTrigger(45, secondDS, SecondDriverStation.CLIMBING_STATE_POV
      * .whenActive(new firstStage().until(interuptButton::get));

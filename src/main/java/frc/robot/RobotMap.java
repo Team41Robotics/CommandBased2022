@@ -37,8 +37,7 @@ public final class RobotMap {
     public static final class INTAKE{
         public static int INTAKE_MOTOR = 11;
         public static int CONVEYOR_MOTOR = 3;
-        public static int FEEDER_MOTOR = 4;
-        public static int ELEVATOR_MOTOR = 6;
+
         public static double INTAKE_FULL_SPEED = 0.6;
         public static double CONVEYOR_FULL_SPEED = 0.5;
         public static double FEEDER_FULL_SPEED = 0.5;
@@ -86,7 +85,7 @@ public final class RobotMap {
  
     public static double THIRD_BALL_SPEED_kP = 2;   
     }
-    public static class shooter{
+    public static class ShooterConstants{
         // Ports and Constants for Hood
         public static int HOOD_SPARK = 5;
         public static int HOOD_TOP_LIMIT_SWITCH = 8;
@@ -95,33 +94,38 @@ public final class RobotMap {
         public static double HOOD_MAX_POS = 50;
         public static double HOOD_MIN_POS = 0;
 
-// Constants for Hood Auto Alligning
-public static double HOOD_SPEED_SLOPE = 0.0731;
-public static double HOOD_SPEED_OFFSET = 35.2;
-public static double HOOD_SPEED_OFFSET_INCREMENT = 0.5;
-public static double HOOD_ANGLE_SLOPE = 0.231;
-public static double HOOD_ANGLE_OFFSET = 8.96;
-public static double HOOD_ANGLE_CURVE = -0.000437;
+        // Constants for Hood Auto Alligning
+        public static double HOOD_SPEED_SLOPE = 0.0731;
+        public static double HOOD_SPEED_OFFSET = 35.2;
+        public static double HOOD_SPEED_OFFSET_INCREMENT = 0.5;
+        public static double HOOD_ANGLE_SLOPE = 0.231;
+        public static double HOOD_ANGLE_OFFSET = 8.96;
+        public static double HOOD_ANGLE_CURVE = -0.000437;
 
-public static double SHOOTER_DEFAULT_SPEED = 0.375;
-public static double HOOD_DEFAULT_ANGLE = 20;
+        public static double SHOOTER_DEFAULT_SPEED = 0.375;
+        public static double HOOD_DEFAULT_ANGLE = 20;
 
-public static double LOW_GOAL_SPEED = 0.22;
-public static double LOW_GOAL_ANGLE = 20;
+        public static double LOW_GOAL_SPEED = 0.22;
+        public static double LOW_GOAL_ANGLE = 20;
 
+        public static int SHOOTER_TALON_1 = 14;
+        public static int SHOOTER_TALON_2 = 15;
+        public static double SHOOTER_SPEED = 0.55;
+        public static int FEEDER_MOTOR = 4;
+        public static int ELEVATOR_MOTOR = 6;
+        public static double FEEDER_FULL_SPEED = 0.5;
+        public static double ELEVATOR_FULL_SPEED = -0.25;
+        // 0.5, 0.03, 0.0005, 1.1, 1
+        public static double SHOOTER_kP = 0.5;
+        public static double SHOOTER_kI = 0.03;
+        public static double SHOOTER_kD = 0.0005;
+        public static double SHOOTER_kFF = 1.1;
+        public static double SHOOTER_RAMP_TIME = 1;
+        
 
-
-// 0.5, 0.03, 0.0005, 1.1, 1
-public static double SHOOTER_kP = 0.5;
-public static double SHOOTER_kI = 0.03;
-public static double SHOOTER_kD = 0.0005;
-public static double SHOOTER_kFF = 1.1;
-public static double SHOOTER_RAMP_TIME = 1;
  
-
- 
-public static double PID_MIN_ERR = 0.03;
-public static double PID_ERROR = 0.1;
+        public static double PID_MIN_ERR = 0.03;
+        public static double PID_ERROR = 0.1;
 
 
 }

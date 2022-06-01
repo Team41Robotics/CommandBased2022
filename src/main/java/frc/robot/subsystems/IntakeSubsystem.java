@@ -21,7 +21,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 public class IntakeSubsystem extends SubsystemBase{
     private static boolean intakeOn;
     //private static boolean intakeUp;
-    private static CANSparkMax intakeMotor, conveyor;
+    public static CANSparkMax intakeMotor, conveyor;
     private static DoubleSolenoid intakeSolLeft;
     private static DoubleSolenoid intakeSolRight;
     //private static Joystick leftJoy, rightJoy, secondDS;
@@ -85,7 +85,6 @@ public class IntakeSubsystem extends SubsystemBase{
     * @param dir the direction to run the intake (enum)
     */
     public static void run() {
-        System.out.println(direction);
         if(intakeOn){
         switch (direction) {
             case FORWARD:
