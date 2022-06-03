@@ -13,12 +13,12 @@ import frc.robot.Robot;
 import frc.robot.RobotMap.ShooterConstants;
 
 public class HoodSubsystem extends SubsystemBase{
-    private static boolean ready, homed;
-    private static double angle;
-    private static CANSparkMax hoodMotor;
-    private static DigitalInput topSwitch, bottomSwitch;
+    public static boolean ready, homed;
+    public static double angle;
+    public static CANSparkMax hoodMotor;
+    public static DigitalInput topSwitch, bottomSwitch;
     private static Joystick station;
-    private static RelativeEncoder enc;
+    public static RelativeEncoder enc;
 
     /**
      * Initialize all motors, encoders, and switches needed to operate the hood

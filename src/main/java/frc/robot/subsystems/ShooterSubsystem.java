@@ -36,6 +36,9 @@ public class ShooterSubsystem extends SubsystemBase{
         rightJoy = Robot.rightJoy;
         reverseOn = false;
         rightDS = Robot.secondDS;
+        elevator.set(0);
+        feeder.set(0);
+        setSpeed(0);
     }
 
     /**

@@ -21,7 +21,8 @@ import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.commands.climber.*;
 import frc.robot.commands.drivetrain.drive;
 import frc.robot.commands.intake.intakeReverse;
-import frc.robot.commands.shooter.AutoShoot;
+import frc.robot.commands.shooter.*;
+
 import frc.robot.RobotMap.*;
 import frc.robot.triggers.*;
 import frc.robot.RobotMap.driverStation.*;
@@ -112,7 +113,6 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
-    HoodSubsystem.home();
 
   }
 
@@ -125,15 +125,19 @@ public class Robot extends TimedRobot {
   public void testInit() {
     // Cancels all running commands at the start of test mode.
     CommandScheduler.getInstance().cancelAll();
+    IntakeSubsystem.reset();
+    DrivetrainSubsystem.hardSet(0);
+    ShooterSubsystem.setSpeed(0);
+
+
   }
 
   /** This function is called periodically during test mode. */
   @Override
   public void testPeriodic() {
-    System.out.print(ClimberSubsystem.getLSwitch());
-    System.out.print(ClimberSubsystem.getMSwitch());
-    System.out.print(ClimberSubsystem.getRSwitch());
-    System.out.println(ClimberSubsystem.getSecondMSwitch());
+    IntakeSubsystem.reset();
+    DrivetrainSubsystem.hardSet(0);
+    ShooterSubsystem.setSpeed(0);
   }
 
   /** This function is called once when the robot is first started up. */
@@ -169,6 +173,11 @@ public class Robot extends TimedRobot {
         .whileActiveOnce(new intakeReverse());
 
     new JoystickButton(secondDS, 1).whenActive(new AutoShoot());
+    new JoystickButton(secondDS, 2).whenActive(new SequentialCommandGroup(new ZeroHood(), new SetHoodPosition(5)));
+    new JoystickButton(secondDS, 3).whenActive(new SetHoodPosition(5));
+    new JoystickButton(secondDS, 7).whenActive(new RunFeeder(true));
+    new JoystickButton(secondDS, 8).whenActive(new RunFeeder(false));
+
     /*
      * new POVTrigger(45, secondDS, SecondDriverStation.CLIMBING_STATE_POV
      * .whenActive(new firstStage().until(interuptButton::get));
