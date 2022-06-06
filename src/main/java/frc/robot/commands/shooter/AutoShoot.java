@@ -41,11 +41,11 @@ public class AutoShoot extends CommandBase {
      angle = (distance * distance * ShooterConstants.HOOD_ANGLE_CURVE) + (distance * ShooterConstants.HOOD_ANGLE_SLOPE) + ShooterConstants.HOOD_ANGLE_OFFSET;;
     Limelight.setLedOn(true);
     speed = speed*.5;
-    System.out.print(distance);
+/*     System.out.print(distance);
     System.out.print("\t");
     System.out.print(angle);
     System.out.print("\t");
-    System.out.println(speed);
+    System.out.println(speed); */
     if (Limelight.targetFound()) {
         ShooterSubsystem.setSpeed(speed / 100);
         HoodSubsystem.setToPosition(angle);
@@ -56,7 +56,6 @@ public class AutoShoot extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    System.out.println("SHOOTER READY");
     HoodSubsystem.hoodMotor.set(0);
   }
 
@@ -64,6 +63,6 @@ public class AutoShoot extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return ShooterSubsystem.isReady() && HoodSubsystem.angle == angle;
+    return ShooterSubsystem.isReady() && HoodSubsystem.ready;
   }
 }

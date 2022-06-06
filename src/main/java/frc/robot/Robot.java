@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.PerpetualCommand;
+import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.button.*;
@@ -21,6 +22,7 @@ import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.commands.climber.*;
 import frc.robot.commands.drivetrain.drive;
 import frc.robot.commands.intake.intakeReverse;
+import frc.robot.RobotMap.driverStation.SecondDriverStation;
 import frc.robot.commands.shooter.*;
 
 import frc.robot.RobotMap.*;
@@ -103,6 +105,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
+    new SequentialCommandGroup(new ZeroHood(), new SetHoodPosition(5)).schedule();
 
   }
 
@@ -113,6 +116,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
+    new SequentialCommandGroup(new ZeroHood(), new SetHoodPosition(5)).schedule();
 
   }
 
@@ -172,7 +176,16 @@ public class Robot extends TimedRobot {
     new JoystickButton(rightJoy, RightJoy.INTAKE_REVERSE)
         .whileActiveOnce(new intakeReverse());
 
-    new JoystickButton(secondDS, 1).whenActive(new AutoShoot());
+    new JoystickButton(secondDS, SecondDriverStation.AUTO_SHOOTING)
+    .whenActive(
+      new SequentialCommandGroup(
+        new AutoShoot(), 
+        new PrintCommand("reached"),
+        new RunFeeder(true), 
+        new WaitCommand(0.75), 
+        new RunFeeder(false)
+        ).until(interuptButton::get)
+      );
     new JoystickButton(secondDS, 2).whenActive(new SequentialCommandGroup(new ZeroHood(), new SetHoodPosition(5)));
     new JoystickButton(secondDS, 3).whenActive(new SetHoodPosition(5));
     new JoystickButton(secondDS, 7).whenActive(new RunFeeder(true));

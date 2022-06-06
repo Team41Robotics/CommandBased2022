@@ -38,6 +38,7 @@ public class ZeroHood extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     HoodSubsystem.enc.setPosition(0);
+    HoodSubsystem.hoodMotor.set(0);
   }
 
   // Returns true when the command should end.
