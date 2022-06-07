@@ -41,11 +41,7 @@ public class AutoShoot extends CommandBase {
      angle = (distance * distance * ShooterConstants.HOOD_ANGLE_CURVE) + (distance * ShooterConstants.HOOD_ANGLE_SLOPE) + ShooterConstants.HOOD_ANGLE_OFFSET;;
     Limelight.setLedOn(true);
     speed = speed*.5;
-/*     System.out.print(distance);
-    System.out.print("\t");
-    System.out.print(angle);
-    System.out.print("\t");
-    System.out.println(speed); */
+
     if (Limelight.targetFound()) {
         ShooterSubsystem.setSpeed(speed / 100);
         HoodSubsystem.setToPosition(angle);
