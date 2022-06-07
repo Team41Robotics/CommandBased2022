@@ -142,6 +142,8 @@ public final class RobotMap {
     public static int AUTON_HUMAN_BALL_WAIT_TIME = 1000;
     public static int SIMPLE_AUTON_DISTANCE = 60;
     public static int DISTANCE_FROM_HUMAN_STATION = 75;
+    public static int BEAM_BREAK_PORT = 7;
+
     }
     public static final class limelight{
         // Measurements for the Limelight

@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.PerpetualCommand;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.button.*;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -52,6 +53,7 @@ public class Robot extends TimedRobot {
   public static Joystick rightJoy = new Joystick(driverStationPorts.RIGHT_JOY);
   public static Joystick secondDS = new Joystick(driverStationPorts.RIGHT_DRIVER_STATION);
   public static JoystickButton interuptButton = new JoystickButton(secondDS, 1);
+  public static DigitalInput BeamBreak = new DigitalInput(Auton.BEAM_BREAK_PORT);
 
   /**
    * This function is run when the robot is first started up and should be used
