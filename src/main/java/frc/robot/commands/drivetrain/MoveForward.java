@@ -19,6 +19,8 @@ public class MoveForward extends CommandBase {
    * @param distnce The subsystem used by this command.
    */
   public MoveForward(double distance, double speed) {
+    endPos = distance;
+    MovementSpeed = speed;
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -31,7 +33,7 @@ public class MoveForward extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    DrivetrainSubsystem.runInverseKinematics(0.075, -.AUTON_SPEED_M_PER_S);
+    DrivetrainSubsystem.runInverseKinematics(0.075, MovementSpeed);
 
   }
 
@@ -42,6 +44,6 @@ public class MoveForward extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return abs(startPos-DrivetrainSubsystem.getPosition()) - endPos < 1;
   }
 }
