@@ -4,10 +4,8 @@
 
 package frc.robot.commands.shooter;
 
-import frc.robot.Robot;
-import frc.robot.subsystems.HoodSubsystem;
+
 import frc.robot.subsystems.ShooterSubsystem;
-import frc.robot.RobotMap.ShooterConstants;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 
