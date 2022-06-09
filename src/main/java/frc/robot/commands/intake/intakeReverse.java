@@ -4,7 +4,6 @@ import frc.robot.subsystems.IntakeSubsystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
 import frc.robot.RobotMap.INTAKE;
-import frc.robot.RobotMap.INTAKE_MODE;
 import frc.robot.RobotMap.ShooterConstants;
 import frc.robot.subsystems.ShooterSubsystem;
 

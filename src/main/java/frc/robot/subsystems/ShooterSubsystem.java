@@ -16,7 +16,7 @@ public class ShooterSubsystem extends SubsystemBase{
     private static PID leftFalconPID, rightFalconPID;
     public static double speed;
     public static CANSparkMax feeder, elevator;
-    private static Joystick rightDS, rightJoy;
+    private static Joystick rightDS;// rightJoy;
     private static TalonFX leftFalcon, rightFalcon;
     
     /**
@@ -33,7 +33,7 @@ public class ShooterSubsystem extends SubsystemBase{
         feeder = new CANSparkMax(ShooterConstants.FEEDER_MOTOR, MotorType.kBrushless);
         elevator = new CANSparkMax(ShooterConstants.ELEVATOR_MOTOR, MotorType.kBrushless);
         speed = 0;
-        rightJoy = Robot.rightJoy;
+        //rightJoy = Robot.rightJoy;
         reverseOn = false;
         rightDS = Robot.secondDS;
         elevator.set(0);
