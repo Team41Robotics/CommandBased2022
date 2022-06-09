@@ -4,11 +4,9 @@
 
 package frc.robot.commands.auton;
 
-import javax.print.attribute.standard.Finishings;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DrivetrainSubsystem;
-import frc.robot.subsystems.IntakeSubsystem;
 
 /** An example command that uses an example subsystem. */
 public class AllignToBall extends CommandBase {

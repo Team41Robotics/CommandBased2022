@@ -8,9 +8,7 @@ package frc.robot.commands.drivetrain;
 import frc.robot.Robot;
 import frc.robot.RobotMap.drivetrainConstants;
 import frc.robot.RobotMap.driverStation.RightJoy;
-import frc.robot.RobotMap.driverStation.SecondDriverStation;
 import frc.robot.subsystems.DrivetrainSubsystem;
-import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj.Joystick;
 

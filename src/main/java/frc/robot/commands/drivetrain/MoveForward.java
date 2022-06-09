@@ -6,7 +6,7 @@ package frc.robot.commands.drivetrain;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DrivetrainSubsystem;
-
+import java.lang.Math;
 /** An example command that uses an example subsystem. */
 public class MoveForward extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
@@ -39,11 +39,13 @@ public class MoveForward extends CommandBase {
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    DrivetrainSubsystem.stop();
+  }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return abs(startPos-DrivetrainSubsystem.getPosition()) - endPos < 1;
+    return Math.abs((startPos-DrivetrainSubsystem.getPosition()) - endPos) < 1;
   }
 }

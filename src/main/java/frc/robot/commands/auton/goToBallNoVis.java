@@ -7,12 +7,9 @@ import frc.robot.Robot;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotMap.Auton;
 import frc.robot.RobotMap.ShooterConstants;
-import frc.robot.RobotMap.drivetrainConstants;
 import frc.robot.subsystems.DrivetrainSubsystem;
-import frc.robot.subsystems.HoodSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.utils.Limelight;
-import frc.robot.utils.PhotonCamera;
 
 /** An example command that uses an example subsystem. */
 public class goToBallNoVis extends CommandBase {
