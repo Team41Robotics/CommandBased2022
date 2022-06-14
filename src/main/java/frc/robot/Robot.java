@@ -47,9 +47,11 @@ public class Robot extends TimedRobot {
   public static DrivetrainSubsystem Drivetrain = new DrivetrainSubsystem();
   public static ShooterSubsystem Shooter = new ShooterSubsystem();
   public static HoodSubsystem Hood = new HoodSubsystem();
-  /* Buttons */
-  public static Joystick leftJoy = new Joystick(driverStationPorts.LEFT_JOY);
-  public static Joystick rightJoy = new Joystick(driverStationPorts.RIGHT_JOY);
+  /* Buttons 
+  JOYSTICK IS FLIPPED DUMMA**
+  */
+  public static Joystick rightJoy = new Joystick(driverStationPorts.LEFT_JOY);
+  public static Joystick leftJoy = new Joystick(driverStationPorts.RIGHT_JOY);
   public static Joystick secondDS = new Joystick(driverStationPorts.RIGHT_DRIVER_STATION);
   public static JoystickButton interuptButton = new JoystickButton(secondDS, 1);
   public static DigitalInput BeamBreak = new DigitalInput(Auton.BEAM_BREAK_PORT);
@@ -160,6 +162,7 @@ public class Robot extends TimedRobot {
     Intake.setDefaultCommand(new RunCommand(IntakeSubsystem::run, Intake));
     new POVTrigger(45, secondDS, SecondDriverStation.CLIMBING_STATE_POV)
         .whenActive(new SequentialCommandGroup(
+            new ZeroHood(),
             new firstStage(),
             new WaitCommand(2.5),
             new secondStage(),
@@ -189,9 +192,10 @@ public class Robot extends TimedRobot {
       );
     new JoystickButton(secondDS, 2).whenActive(new SequentialCommandGroup(new ZeroHood(), new SetHoodPosition(5)));
     new JoystickButton(secondDS, 3).whenActive(new SetHoodPosition(5));
-    new JoystickButton(secondDS, 7).whenActive(new RunFeeder(true));
-    new JoystickButton(secondDS, 8).whenActive(new RunFeeder(false));
-
+    new JoystickButton(leftJoy, 3).whenActive(new RunFeeder(true));
+    new JoystickButton(leftJoy, 4).whenActive(new RunFeeder(false));
+    new JoystickButton(secondDS, 9).whenActive(new CloseShoot());
+    new JoystickButton(leftJoy, 2).whenActive(new StopShoot());
     /*
      * new POVTrigger(45, secondDS, SecondDriverStation.CLIMBING_STATE_POV
      * .whenActive(new firstStage().until(interuptButton::get));
