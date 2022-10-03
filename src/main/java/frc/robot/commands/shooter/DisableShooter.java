@@ -6,10 +6,7 @@ package frc.robot.commands.shooter;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
-import frc.robot.subsystems.HoodSubsystem;
-import frc.robot.subsystems.ShooterSubsystem;
 
-/** An example command that uses an example subsystem. */
 public class DisableShooter extends CommandBase {
 
     public DisableShooter() {
@@ -17,21 +14,18 @@ public class DisableShooter extends CommandBase {
     }
 
     @Override
-    public void initialize() {}
-
-    @Override
     public void execute() {
-        ShooterSubsystem.setSpeed(0);
-        HoodSubsystem.setToPosition(5);
+        Robot.shooter.setSpeed(0);
+        Robot.hood.setToPosition(5);
     }
 
     @Override
     public void end(boolean interrupted) {
-        HoodSubsystem.hoodMotor.set(0);
+        Robot.hood.hoodMotor.set(0);
     }
 
     @Override
     public boolean isFinished() {
-        return ShooterSubsystem.isReady() && HoodSubsystem.ready;
+        return Robot.shooter.isReady() && Robot.hood.ready;
     }
 }

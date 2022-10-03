@@ -5,47 +5,39 @@
 package frc.robot.commands.drivetrain;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Robot;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import java.lang.Math;
-/** An example command that uses an example subsystem. */
+
 public class MoveForward extends CommandBase {
-  @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-  private double startPos;
-  private double endPos;
-  private double MovementSpeed;
-  /**
-   * Creates a new ExampleCommand.
-   *
-   * @param distnce The subsystem used by this command.
-   */
-  public MoveForward(double distance, double speed) {
-    endPos = distance;
-    MovementSpeed = speed;
-    // Use addRequirements() here to declare subsystem dependencies.
-  }
 
-  // Called when the command is initially scheduled.
-  @Override
-  public void initialize() {
-    startPos=DrivetrainSubsystem.getPosition();
-  }
+    private double startPos;
 
-  // Called every time the scheduler runs while the command is scheduled.
-  @Override
-  public void execute() {
-    DrivetrainSubsystem.runInverseKinematics(0.075, MovementSpeed);
+    private double endPos;
+    private double movementSpeed;
 
-  }
+    public MoveForward(double distance, double speed) {
+        endPos = distance;
+        movementSpeed = speed;
+    }
 
-  // Called once the command ends or is interrupted.
-  @Override
-  public void end(boolean interrupted) {
-    DrivetrainSubsystem.stop();
-  }
+    @Override
+    public void initialize() {
+        startPos = Robot.drivetrain.getPosition();
+    }
 
-  // Returns true when the command should end.
-  @Override
-  public boolean isFinished() {
-    return Math.abs((startPos-DrivetrainSubsystem.getPosition()) - endPos) < 1;
-  }
+    @Override
+    public void execute() {
+        Robot.drivetrain.runInverseKinematics(0.075, movementSpeed);
+    }
+
+    @Override
+    public void end(boolean interrupted) {
+        Robot.drivetrain.stop();
+    }
+
+    @Override
+    public boolean isFinished() {
+        return Math.abs((startPos - Robot.drivetrain.getPosition()) - endPos) < 1;
+    }
 }

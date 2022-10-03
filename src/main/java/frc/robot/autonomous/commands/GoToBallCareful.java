@@ -8,49 +8,37 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
 import frc.robot.RobotMap.AutonConstants;
 import frc.robot.RobotMap.DrivetrainConstants;
-import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.utils.PhotonCamera;
 
-/** An example command that uses an example subsystem. */
 public class GoToBallCareful extends CommandBase {
-  @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-  private boolean thirdBallClose = false;
-  /**
-   * Creates a new ExampleCommand.
-   *
-   * @param subsystem The subsystem used by this command.
-   */
-  public GoToBallCareful() {
-    // Use addRequirements() here to declare subsystem dependencies.
-  }
 
-  // Called when the command is initially scheduled.
-  @Override
-  public void initialize() {}
+    private boolean thirdBallClose = false;
 
-  // Called every time the scheduler runs while the command is scheduled.
-  @Override
-  public void execute() {
-
-      if (PhotonCamera.getArea() > 5) {
-          thirdBallClose = true;
-      }
-      double angle = PhotonCamera.getYaw();
-      double slowSpeed = 0.5;
-      DrivetrainSubsystem.runInverseKinematics((DrivetrainConstants.BALL_FOLLOWING_kP * -angle),
-      !thirdBallClose ? AutonConstants.AUTON_SPEED_M_PER_S : slowSpeed);
-
-
+    public GoToBallCareful() {
+        addRequirements(Robot.drivetrain);
     }
-  // Called once the command ends or is interrupted.
-  @Override
-  public void end(boolean interrupted) {
-    DrivetrainSubsystem.setNoRamp(0);
-  }
 
-  // Returns true when the command should end.
-  @Override
-  public boolean isFinished() {
-    return DrivetrainSubsystem.getDanger() || !Robot.beamBreak.get();
-  }
+    @Override
+    public void execute() {
+        if (PhotonCamera.getArea() > 5) {
+            thirdBallClose = true;
+        }
+        double angle = PhotonCamera.getYaw();
+        double slowSpeed = 0.5;
+        Robot.drivetrain.runInverseKinematics(
+            (DrivetrainConstants.BALL_FOLLOWING_kP * -angle),
+            !thirdBallClose ? AutonConstants.AUTON_SPEED_M_PER_S : slowSpeed
+        );
+    }
+
+    @Override
+    public void end(boolean interrupted) {
+		// Finished when a ball breaks the sensor
+        Robot.drivetrain.setNoRamp(0);
+    }
+
+    @Override
+    public boolean isFinished() {
+        return Robot.drivetrain.getDanger() || !Robot.beamBreak.get();
+    }
 }

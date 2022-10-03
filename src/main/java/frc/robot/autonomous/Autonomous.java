@@ -9,11 +9,11 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Robot;
 import frc.robot.RobotMap.AutonConstants;
 import frc.robot.autonomous.commands.AllignToBall;
-import frc.robot.autonomous.commands.AutonomousShootBall;
+import frc.robot.autonomous.commands.PrepareToShoot;
 import frc.robot.autonomous.commands.GoToBall;
 import frc.robot.autonomous.commands.GoToBallCareful;
 import frc.robot.autonomous.commands.GoalAlign;
-import frc.robot.autonomous.commands.Shoot;
+import frc.robot.autonomous.commands.ShootBall;
 import frc.robot.commands.drivetrain.MoveForward;
 import frc.robot.commands.shooter.SetHoodPosition;
 import frc.robot.commands.shooter.ZeroHood;
@@ -50,8 +50,8 @@ public class Autonomous {
             new SequentialCommandGroup(new ZeroHood(), new SetHoodPosition(5))
           ),
           new GoalAlign(),
-          new AutonomousShootBall(),
-          new Shoot().withTimeout(0.5),
+          new PrepareToShoot(),
+          new ShootBall().withTimeout(0.5),
           new AllignToBall(),
           new GoToBallCareful(),
           new WaitCommand(1.5),
@@ -62,8 +62,8 @@ public class Autonomous {
           new RunCommand(() -> Robot.drivetrain.stop())
           .until(() -> Robot.drivetrain.isReady()),
           new GoalAlign(),
-          new AutonomousShootBall(),
-          new Shoot().withTimeout(0.5)
+          new PrepareToShoot(),
+          new ShootBall().withTimeout(0.5)
         )
     );
 
@@ -82,8 +82,8 @@ public class Autonomous {
             )
             ),
             new GoalAlign(),
-            new AutonomousShootBall(),
-            new Shoot().withTimeout(1.5)
+            new PrepareToShoot(),
+            new ShootBall().withTimeout(1.5)
 		  )
 	  );
   }

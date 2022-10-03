@@ -6,41 +6,20 @@ package frc.robot.autonomous.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
-import frc.robot.subsystems.DrivetrainSubsystem;
 
-/** An example command that uses an example subsystem. */
 public class GoalAlign extends CommandBase {
-  @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
 
-  /**
-   * Creates a new ExampleCommand.
-   *
-   * @param subsystem The subsystem used by this command.
-   */
-  public GoalAlign() {
-    addRequirements(Robot.drivetrain);
-    // Use addRequirements() here to declare subsystem dependencies.
-  }
+    public GoalAlign() {
+        addRequirements(Robot.drivetrain);
+    }
 
-  // Called when the command is initially scheduled.
-  @Override
-  public void initialize() {}
+    @Override
+    public void end(boolean interrupted) {
+        Robot.drivetrain.setNoRamp(0);
+    }
 
-  // Called every time the scheduler runs while the command is scheduled.
-  @Override
-  public void execute() {}
-
-  // Called once the command ends or is interrupted.
-  @Override
-  public void end(boolean interrupted) {
-    DrivetrainSubsystem.setNoRamp(0);
-
-  }
-
-
-  // Returns true when the command should end.
-  @Override
-  public boolean isFinished() {
-    return DrivetrainSubsystem.alignToGoal();
-  }
+    @Override
+    public boolean isFinished() {
+        return Robot.drivetrain.alignToGoal();
+    }
 }

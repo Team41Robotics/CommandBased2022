@@ -4,26 +4,22 @@
 
 package frc.robot.autonomous.commands;
 
-
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
 
-/** An example command that uses an example subsystem. */
 public class AllignToBall extends CommandBase {
-  private boolean finished = false;
 
-  @Override
-  public void execute() {
-    this.finished = Robot.drivetrain.alignToBall();
-  }
+    public AllignToBall() {
+        addRequirements(Robot.drivetrain);
+    }
 
-  @Override
-  public void end(boolean interrupted) {
-    Robot.drivetrain.setNoRamp(0);
-  }
+    @Override
+    public void end(boolean interrupted) {
+        Robot.drivetrain.setNoRamp(0);
+    }
 
-  @Override
-  public boolean isFinished() {
-    return this.finished;
-  }
+    @Override
+    public boolean isFinished() {
+        return Robot.drivetrain.alignToBall();
+    }
 }

@@ -4,60 +4,34 @@
 
 package frc.robot.commands.shooter;
 
-import frc.robot.Robot;
-import frc.robot.RobotMap.ShooterConstants;
-import frc.robot.subsystems.DrivetrainSubsystem;
-import frc.robot.subsystems.HoodSubsystem;
-import frc.robot.subsystems.ShooterSubsystem;
-import frc.robot.utils.Limelight;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Robot;
 
-/** An example command that uses an example subsystem. */
 public class LineUpNearShot extends CommandBase {
-  @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
 
-  private double distance;
-  private double angle;
-  private double speed;
-  /**
-   * Creates a new ExampleCommand.
-   *
-   * @param subsystem The subsystem used by this command.
-   */
-  public LineUpNearShot() {
-    // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(Robot.hood, Robot.drivetrain);
-  }
+    private double angle;
+    private double speed;
 
-  // Called when the command is initially scheduled.
-  @Override
-  public void initialize() {}
+    public LineUpNearShot() {
+        addRequirements(Robot.hood, Robot.drivetrain);
+    }
 
-  // Called every time the scheduler runs while the command is scheduled.
-  @Override
-  public void execute() {
-     distance = Limelight.estimateDistance();
-     speed = 32.5;
-     angle =15;
-    Limelight.setLedOn(true);
+    @Override
+    public void execute() {
+        speed = 32.5;
+        angle = 15;
 
+        Robot.shooter.setSpeed(speed / 100);
+        Robot.hood.setToPosition(angle);
+    }
 
+    @Override
+    public void end(boolean interrupted) {
+        Robot.hood.hoodMotor.set(0);
+    }
 
-        ShooterSubsystem.setSpeed(speed / 100);
-        HoodSubsystem.setToPosition(angle);
-
-  }
-
-  // Called once the command ends or is interrupted.
-  @Override
-  public void end(boolean interrupted) {
-    HoodSubsystem.hoodMotor.set(0);
-  }
-
-
-  // Returns true when the command should end.
-  @Override
-  public boolean isFinished() {
-    return ShooterSubsystem.isReady() && HoodSubsystem.ready;
-  }
+    @Override
+    public boolean isFinished() {
+        return Robot.shooter.isReady() && Robot.hood.ready;
+    }
 }

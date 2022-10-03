@@ -9,7 +9,6 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
 import frc.robot.RobotMap.DrivetrainConstants;
 
-/** An example command that uses an example subsystem. */
 public class DefaultDrive extends CommandBase {
 
     public DefaultDrive() {
