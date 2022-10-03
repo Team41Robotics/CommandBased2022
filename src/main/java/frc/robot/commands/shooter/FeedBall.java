@@ -19,7 +19,7 @@ public class FeedBall extends CommandBase {
    */
   public FeedBall() {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(Robot.Shooter);
+    addRequirements(Robot.shooter);
   }
 
   // Called when the command is initially scheduled.

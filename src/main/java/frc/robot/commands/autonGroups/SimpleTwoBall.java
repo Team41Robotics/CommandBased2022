@@ -2,6 +2,11 @@ package frc.robot.commands.autonGroups;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.autonomous.commands.AllignToBall;
+import frc.robot.autonomous.commands.AutonomousShootBall;
+import frc.robot.autonomous.commands.GoToBall;
+import frc.robot.autonomous.commands.GoalAlign;
+import frc.robot.autonomous.commands.Shoot;
 import frc.robot.commands.auton.*;
 import frc.robot.commands.shooter.*;
 
@@ -14,7 +19,7 @@ public class SimpleTwoBall extends SequentialCommandGroup {
             new ParallelCommandGroup(
                 new SequentialCommandGroup(    
                     new AllignToBall(),
-                    new goToBall()
+                    new GoToBall()
             ), 
                 new SequentialCommandGroup(
                     new ZeroHood(),
@@ -22,7 +27,7 @@ public class SimpleTwoBall extends SequentialCommandGroup {
             )
             ),
             new GoalAlign(),
-            new AutonShoot(),
+            new AutonomousShootBall(),
             new Shoot().withTimeout(1.5)
         );
     }

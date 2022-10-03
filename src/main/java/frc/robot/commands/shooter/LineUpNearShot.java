@@ -13,7 +13,7 @@ import frc.robot.utils.Limelight;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /** An example command that uses an example subsystem. */
-public class CloseShoot extends CommandBase {
+public class LineUpNearShot extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
 
   private double distance;
@@ -24,9 +24,9 @@ public class CloseShoot extends CommandBase {
    *
    * @param subsystem The subsystem used by this command.
    */
-  public CloseShoot() {
+  public LineUpNearShot() {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(Robot.Hood, Robot.Drivetrain);
+    addRequirements(Robot.hood, Robot.drivetrain);
   }
 
   // Called when the command is initially scheduled.

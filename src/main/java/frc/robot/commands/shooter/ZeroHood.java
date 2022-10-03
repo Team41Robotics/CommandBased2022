@@ -21,7 +21,7 @@ public class ZeroHood extends CommandBase {
    */
   public ZeroHood() {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(Robot.Hood);
+    addRequirements(Robot.hood);
   }
 
   // Called when the command is initially scheduled.

@@ -7,10 +7,10 @@ package frc.robot.commands.climber;
 import frc.robot.subsystems.ClimberSubsystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
-import frc.robot.RobotMap.CLIMBER;
+import frc.robot.RobotMap.ClimberConstants;
 
 /** An example command that uses an example subsystem. */
-public class fifthStage extends CommandBase {
+public class FifthStage extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
 
 
@@ -19,10 +19,10 @@ public class fifthStage extends CommandBase {
    *
    * @param subsystem The subsystem used by this command.
    */
-  public fifthStage() {
+  public FifthStage() {
     // Use addRequirements() here to declare subsystem dependencies.
 
-    addRequirements(Robot.Climber);
+    addRequirements(Robot.climber);
   }
 
   // Called when the command is initially scheduled.
@@ -36,7 +36,7 @@ public class fifthStage extends CommandBase {
   public void execute() {
 
   System.out.println(ClimberSubsystem.getEncoder());
-  ClimberSubsystem.setSpeed(CLIMBER.CLIMBING_SLOW_SPEED);
+  ClimberSubsystem.setSpeed(ClimberConstants.CLIMBING_SLOW_SPEED);
   }  
 
   // Called once the command ends or is interrupted.

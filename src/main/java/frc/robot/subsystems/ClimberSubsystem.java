@@ -1,21 +1,17 @@
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
-
-import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableEntry;
-
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-
-import edu.wpi.first.wpilibj.PneumaticsModuleType;
-import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import com.revrobotics.RelativeEncoder;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
-
-import frc.robot.RobotMap.CLIMBER;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.RobotMap.ClimberConstants;
 
 /**
  * Pistons:
@@ -27,40 +23,54 @@ import frc.robot.RobotMap.CLIMBER;
  * </ul>
  */
 public class ClimberSubsystem extends SubsystemBase {
-    public static boolean climbing;
-    // private static boolean firstStageUp, secondStageUp;
-    private static int climbingState;
-    private static double motorSpeed;
-    // private statc long startTime;
-    private static CANSparkMax climbingMotor1;
-    private static CANSparkMax climbingMotor2;
-    private static DigitalInput firstStageLeftSwitch, firstStageRightSwitch, secondStageSwitch, secondStageSecondSwitch;
-    private static DoubleSolenoid secondStageGearLock, firstStageGearLock, secondStageRelease, gearShifter; // secondStageRelease
-                                                                                                            // is second
-                                                                                                            // stage
-                                                                                                            // piston
-    // private static Joystick leftJoy;
-    // private static Joystick driverStation;
-    private static RelativeEncoder climbingEncoder1;
-    private static RelativeEncoder climbingEncoder2;
 
-    /**
-     * Create a new object for controlling the climber on the robot
-     */
-    public static void initClimber() {
-        climbingMotor1 = new CANSparkMax(CLIMBER.CLIMBING_SPARK_F, MotorType.kBrushless);
-        climbingMotor2 = new CANSparkMax(CLIMBER.CLIMBING_SPARK_B, MotorType.kBrushless);
+    public boolean climbing;
+    // private boolean firstStageUp, secondStageUp;
+    private int climbingState;
+    private double motorSpeed;
+    // private statc long startTime;
+    private CANSparkMax climbingMotor1;
+    private CANSparkMax climbingMotor2;
+    private DigitalInput firstStageLeftSwitch, firstStageRightSwitch, secondStageSwitch, secondStageSecondSwitch;
+    private DoubleSolenoid secondStageGearLock, firstStageGearLock, secondStageRelease, gearShifter; // secondStageRelease
+
+    private RelativeEncoder climbingEncoder1;
+    private RelativeEncoder climbingEncoder2;
+
+    public ClimberSubsystem() {
+        climbingMotor1 = new CANSparkMax(ClimberConstants.CLIMBING_SPARK_F, MotorType.kBrushless);
+        climbingMotor2 = new CANSparkMax(ClimberConstants.CLIMBING_SPARK_B, MotorType.kBrushless);
         climbingMotor1.setIdleMode(IdleMode.kBrake);
         climbingMotor2.setIdleMode(IdleMode.kBrake);
 
-        secondStageGearLock = new DoubleSolenoid(CLIMBER.PCM_PORT, PneumaticsModuleType.REVPH,
-                CLIMBER.INNER_GEAR_LOCK_OFF, CLIMBER.INNER_GEAR_LOCK_ON);
-        firstStageGearLock = new DoubleSolenoid(CLIMBER.PCM_PORT, PneumaticsModuleType.REVPH,
-                CLIMBER.OUTER_GEAR_LOCK_OFF, CLIMBER.OUTER_GEAR_LOCK_ON);
-        secondStageRelease = new DoubleSolenoid(CLIMBER.PCM_PORT, PneumaticsModuleType.REVPH, CLIMBER.MIDDLE_ARM_LOCK,
-                CLIMBER.MIDDLE_ARM_RELEASE);
-        gearShifter = new DoubleSolenoid(CLIMBER.PCM_PORT, PneumaticsModuleType.REVPH, CLIMBER.MOVE_TO_OUTER_ARMS,
-                CLIMBER.MOVE_TO_INNER_ARM);
+        secondStageGearLock =
+            new DoubleSolenoid(
+                ClimberConstants.PCM_PORT,
+                PneumaticsModuleType.REVPH,
+                ClimberConstants.INNER_GEAR_LOCK_OFF,
+                ClimberConstants.INNER_GEAR_LOCK_ON
+            );
+        firstStageGearLock =
+            new DoubleSolenoid(
+                ClimberConstants.PCM_PORT,
+                PneumaticsModuleType.REVPH,
+                ClimberConstants.OUTER_GEAR_LOCK_OFF,
+                ClimberConstants.OUTER_GEAR_LOCK_ON
+            );
+        secondStageRelease =
+            new DoubleSolenoid(
+                ClimberConstants.PCM_PORT,
+                PneumaticsModuleType.REVPH,
+                ClimberConstants.MIDDLE_ARM_LOCK,
+                ClimberConstants.MIDDLE_ARM_RELEASE
+            );
+        gearShifter =
+            new DoubleSolenoid(
+                ClimberConstants.PCM_PORT,
+                PneumaticsModuleType.REVPH,
+                ClimberConstants.MOVE_TO_OUTER_ARMS,
+                ClimberConstants.MOVE_TO_INNER_ARM
+            );
         climbingEncoder1 = climbingMotor1.getEncoder();
         climbingEncoder2 = climbingMotor2.getEncoder();
 
@@ -72,10 +82,10 @@ public class ClimberSubsystem extends SubsystemBase {
         firstStageGearLock.set(DoubleSolenoid.Value.kReverse);
         gearShifter.set(Value.kForward);
 
-        firstStageLeftSwitch = new DigitalInput(CLIMBER.FIRST_STAGE_LIMIT_SWITCH_L);
-        firstStageRightSwitch = new DigitalInput(CLIMBER.FIRST_STAGE_LIMIT_SWITCH_R);
-        secondStageSecondSwitch = new DigitalInput(CLIMBER.FIRST_STAGE_LIMIT_SWTICH_M);
-        secondStageSwitch = new DigitalInput(CLIMBER.SECOND_STAGE_LIMIT_SWITCH);
+        firstStageLeftSwitch = new DigitalInput(ClimberConstants.FIRST_STAGE_LIMIT_SWITCH_L);
+        firstStageRightSwitch = new DigitalInput(ClimberConstants.FIRST_STAGE_LIMIT_SWITCH_R);
+        secondStageSecondSwitch = new DigitalInput(ClimberConstants.FIRST_STAGE_LIMIT_SWTICH_M);
+        secondStageSwitch = new DigitalInput(ClimberConstants.SECOND_STAGE_LIMIT_SWITCH);
 
         climbing = false;
     }
@@ -83,7 +93,7 @@ public class ClimberSubsystem extends SubsystemBase {
     /**
      * Reset the climbing process
      */
-    public static void reset() {
+    public void reset() {
         secondStageGearLock.set(DoubleSolenoid.Value.kForward);
         secondStageRelease.set(DoubleSolenoid.Value.kForward);
         firstStageGearLock.set(DoubleSolenoid.Value.kReverse);
@@ -95,10 +105,10 @@ public class ClimberSubsystem extends SubsystemBase {
 
     /**
      * Set the speed of the climber motors
-     * 
+     *
      * @param speed The speed of the climber motors
      */
-    public static void setSpeed(double speed) {
+    public void setSpeed(double speed) {
         motorSpeed = speed;
         climbingMotor1.set(motorSpeed);
         climbingMotor2.set(motorSpeed);
@@ -107,7 +117,7 @@ public class ClimberSubsystem extends SubsystemBase {
     /**
      * Toggle the Second Stage Gear Lock
      */
-    public static void toggleSecondStageLock() {
+    public void toggleSecondStageLock() {
         if (secondStageGearLock.get() == DoubleSolenoid.Value.kForward) {
             secondStageGearLock.set(DoubleSolenoid.Value.kReverse);
         } else {
@@ -118,7 +128,7 @@ public class ClimberSubsystem extends SubsystemBase {
     /**
      * Toggle the First Stage Gear Lock
      */
-    public static void toggleFirstStageLock() {
+    public void toggleFirstStageLock() {
         if (firstStageGearLock.get() == DoubleSolenoid.Value.kReverse) {
             firstStageGearLock.set(DoubleSolenoid.Value.kForward);
         } else {
@@ -126,7 +136,7 @@ public class ClimberSubsystem extends SubsystemBase {
         }
     }
 
-    public static void toggleSecondStageRelease() {
+    public void toggleSecondStageRelease() {
         if (secondStageRelease.get() == DoubleSolenoid.Value.kForward) {
             secondStageRelease.set(DoubleSolenoid.Value.kReverse);
         } else {
@@ -134,7 +144,7 @@ public class ClimberSubsystem extends SubsystemBase {
         }
     }
 
-    public static void toggleGearShifter() {
+    public void toggleGearShifter() {
         System.out.println("here");
         if (gearShifter.get() == Value.kForward) {
             gearShifter.set(Value.kReverse);
@@ -143,16 +153,16 @@ public class ClimberSubsystem extends SubsystemBase {
         }
     }
 
-    public static void resetEncoders(int position) {
+    public void resetEncoders(int position) {
         climbingEncoder1.setPosition(position);
         climbingEncoder2.setPosition(position);
     }
 
-    public static double getEncoder() {
+    public double getEncoder() {
         return climbingEncoder1.getPosition();
     }
 
-    public static void lockFirstStage(boolean forward) {
+    public void lockFirstStage(boolean forward) {
         if (forward) {
             firstStageGearLock.set(DoubleSolenoid.Value.kForward);
         } else {
@@ -160,7 +170,7 @@ public class ClimberSubsystem extends SubsystemBase {
         }
     }
 
-    public static void lockSecondStage(boolean forward) {
+    public void lockSecondStage(boolean forward) {
         if (forward) {
             secondStageGearLock.set(DoubleSolenoid.Value.kForward);
         } else {
@@ -168,7 +178,7 @@ public class ClimberSubsystem extends SubsystemBase {
         }
     }
 
-    public static void setGearShifter(boolean forward) {
+    public void setGearShifter(boolean forward) {
         if (forward) {
             gearShifter.set(DoubleSolenoid.Value.kForward);
         } else {
@@ -177,134 +187,47 @@ public class ClimberSubsystem extends SubsystemBase {
     }
 
     /**
-     * Conduct the climbing process using the joysticks and bottom touchscreen, with
-     * control being decided by a toggle switch
-     */
-
-    public static void teleop() {
-        /*
-         * if (driverStation.getRawButton(Controls.SecondDriverStation.
-         * MANUAL_CLIMBING_TOGGLE)) {
-         * if (leftJoy.getRawButton(Controls.LeftJoy.CLIMB_FWD)) {
-         * motorSpeed = Climber.CLIMBING_MAX_SPEED;
-         * } else if (leftJoy.getRawButton(Controls.LeftJoy.CLIMB_RV)) {
-         * motorSpeed = -Climber.CLIMBING_MAX_SPEED;
-         * } else {
-         * motorSpeed = 0;
-         * }
-         * 
-         * if
-         * (driverStation.getRawButton(Controls.SecondDriverStation.ENABLE_PISTON_BRAKE)
-         * ) {
-         * secondStageGearLock.set(Value.kForward);
-         * }
-         * } else {
-         * climbingState =
-         * driverStation.getPOV(Controls.SecondDriverStation.CLIMBING_STATE_POV);
-         * switch(climbingState) {
-         * case (0):
-         * motorSpeed = 0;
-         * break;
-         * case(45):
-         * climbing = true;
-         * Hood.setToPosition(0);
-         * if (!firstStageUp) {
-         * motorSpeed = -Climber.CLIMBING_SLOW_SPEED;
-         * if (!firstStageLeftSwitch.get() || !firstStageRightSwitch.get()) {
-         * firstStageUp = true;
-         * System.out.println("Pressed");
-         * }
-         * } else {
-         * motorSpeed = 0;
-         * }
-         * break;
-         * case(90):
-         * // Unlock Gears
-         * if (firstStageGearLock.get() != Value.kForward || secondStageGearLock.get()
-         * != Value.kReverse) {
-         * firstStageGearLock.set(DoubleSolenoid.Value.kForward);
-         * secondStageGearLock.set(DoubleSolenoid.Value.kReverse);
-         * startTime = System.currentTimeMillis();
-         * } else if ((System.currentTimeMillis() - startTime >=
-         * Climber.CLIMBING_PISTON_TIME_DELAY) && (gearShifter.get() == Value.kForward))
-         * {
-         * gearShifter.set(Value.kReverse);
-         * }
-         * break;
-         * case(135):
-         * // send out third arm
-         * if (!secondStageUp) {
-         * motorSpeed = -Climber.CLIMBING_SPEED_SECOND_STAGE;
-         * 
-         * if (!secondStageSwitch.get() || !secondStageSecondSwitch.get()) {
-         * secondStageUp = true;
-         * System.out.println("Second stage bueno");
-         * }
-         * } else {
-         * motorSpeed = 0;
-         * }
-         * break;
-         * case(180):
-         * // disable piston for third arm
-         * secondStageRelease.set(Value.kReverse);
-         * break;
-         * case(225):
-         * // hold in place
-         * motorSpeed = 0;
-         * break;
-         * case(270):
-         * break;
-         * case(315):
-         * break;
-         * }
-         * }
-         * climbingMotor1.set(motorSpeed);
-         * climbingMotor2.set(motorSpeed);
-         */
-    }
-
-    /**
      * Get the value of the leftmost limit switch
-     * 
+     *
      * @return the value of the switch
      */
-    public static boolean getLSwitch() {
+    public boolean getLSwitch() {
         return firstStageLeftSwitch.get();
     }
 
     /**
      * Get the value of the rightmost switch
-     * 
+     *
      * @return the value of the switch
      */
-    public static boolean getRSwitch() {
+    public boolean getRSwitch() {
         return firstStageRightSwitch.get();
     }
 
     /**
      * Get the value of the second switch for the middle climber
-     * 
+     *
      * @return the value of the switch
      */
-    public static boolean getSecondMSwitch() {
+    public boolean getSecondMSwitch() {
         return secondStageSecondSwitch.get();
     }
 
     /**
      * Get the value of the first switch for the middle climber
-     * 
+     *
      * @return the value of the switch
      */
-    public static boolean getMSwitch() {
+    public boolean getMSwitch() {
         return secondStageSwitch.get();
     }
 
     /**
      * Add all telemetry data for the climber
-     * 
+     *
      * @param table the base telemetry networktable
      */
-    public static void telemetry(NetworkTable table) {
+    public void telemetry(NetworkTable table) {
         NetworkTable motorTable = table.getSubTable("motors");
 
         NetworkTable climberMotor1Table = motorTable.getSubTable("Climber Motor 1");
@@ -355,23 +278,33 @@ public class ClimberSubsystem extends SubsystemBase {
 
         NetworkTable secondStageGearLockTable = solenoidTable.getSubTable("Second Stage Friction Brake");
         secondStageGearLockTable.getEntry("name").setString("Second Stage Friction Brake");
-        secondStageGearLockTable.getEntry("status").setDouble(secondStageGearLock.get() == Value.kForward ? 1
-                : (secondStageGearLock.get() == Value.kReverse ? -1 : 0));
+        secondStageGearLockTable
+            .getEntry("status")
+            .setDouble(
+                secondStageGearLock.get() == Value.kForward ? 1 : (secondStageGearLock.get() == Value.kReverse ? -1 : 0)
+            );
 
         NetworkTable firstStageGearLockTable = solenoidTable.getSubTable("Gear Jammer");
         firstStageGearLockTable.getEntry("name").setString("Gear Jammer");
-        firstStageGearLockTable.getEntry("status").setDouble(
-                firstStageGearLock.get() == Value.kForward ? 1 : (firstStageGearLock.get() == Value.kReverse ? -1 : 0));
+        firstStageGearLockTable
+            .getEntry("status")
+            .setDouble(
+                firstStageGearLock.get() == Value.kForward ? 1 : (firstStageGearLock.get() == Value.kReverse ? -1 : 0)
+            );
 
         NetworkTable secondStageReleaseTable = solenoidTable.getSubTable("Second Stage Release");
         secondStageReleaseTable.getEntry("name").setString("Second Stage Release");
-        secondStageReleaseTable.getEntry("status").setDouble(
-                secondStageRelease.get() == Value.kForward ? 1 : (secondStageRelease.get() == Value.kReverse ? -1 : 0));
+        secondStageReleaseTable
+            .getEntry("status")
+            .setDouble(
+                secondStageRelease.get() == Value.kForward ? 1 : (secondStageRelease.get() == Value.kReverse ? -1 : 0)
+            );
 
         NetworkTable gearShifterTable = solenoidTable.getSubTable("Gear Shifter");
         gearShifterTable.getEntry("name").setString("Gear Shifter");
-        gearShifterTable.getEntry("status")
-                .setDouble(gearShifter.get() == Value.kForward ? 1 : (gearShifter.get() == Value.kReverse ? -1 : 0));
+        gearShifterTable
+            .getEntry("status")
+            .setDouble(gearShifter.get() == Value.kForward ? 1 : (gearShifter.get() == Value.kReverse ? -1 : 0));
 
         NetworkTableEntry climbingStateEntry = table.getEntry("state_climber");
         switch (climbingState) {

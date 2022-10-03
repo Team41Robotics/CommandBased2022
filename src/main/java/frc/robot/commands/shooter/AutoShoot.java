@@ -26,7 +26,7 @@ public class AutoShoot extends CommandBase {
    */
   public AutoShoot() {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(Robot.Hood, Robot.Drivetrain);
+    addRequirements(Robot.hood, Robot.drivetrain);
   }
 
   // Called when the command is initially scheduled.
