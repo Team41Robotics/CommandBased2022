@@ -6,8 +6,6 @@ package frc.robot.commands.drivetrain;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
-import frc.robot.subsystems.DrivetrainSubsystem;
-import java.lang.Math;
 
 public class MoveForward extends CommandBase {
 

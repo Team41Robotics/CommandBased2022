@@ -7,41 +7,29 @@ package frc.robot.commands.climber;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
 import frc.robot.RobotMap.ClimberConstants;
-import frc.robot.subsystems.ClimberSubsystem;
 
 public class FourthStage extends CommandBase {
 
-    @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
-    /**
-     * Creates a new ExampleCommand.
-     *
-     * @param subsystem The subsystem used by this command.
-     */
     public FourthStage() {
-        // Use addRequirements() here to declare subsystem dependencies.
         addRequirements(Robot.climber);
     }
 
-    // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        ClimberSubsystem.toggleSecondStageRelease();
+        Robot.climber.toggleSecondStageRelease();
     }
 
-    // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        ClimberSubsystem.setSpeed(-ClimberConstants.CLIMBING_SLOW_SPEED);
+        Robot.climber.setSpeed(-ClimberConstants.CLIMBING_SLOW_SPEED);
     }
 
-    // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
         System.out.println("ended");
-        ClimberSubsystem.setSpeed(0);
+        Robot.climber.setSpeed(0);
     }
 
-    // Returns true when the command should end.
     @Override
     public boolean isFinished() {
         return true;
