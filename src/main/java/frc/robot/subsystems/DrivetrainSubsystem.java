@@ -3,13 +3,12 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.kauailabs.navx.frc.AHRS;
+
 import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.SerialPort.Port;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Robot;
 import frc.robot.RobotMap.AutonConstants;
-import frc.robot.RobotMap.DriverStationConstants.RightJoystick;
 import frc.robot.RobotMap.DrivetrainConstants;
 import frc.robot.RobotMap.LimelightConstants;
 import frc.robot.utils.PID;
@@ -22,8 +21,6 @@ public class DrivetrainSubsystem extends SubsystemBase {
   public long startTime;
   private double angleToBall;
   private AHRS navx = new AHRS(Port.kUSB);
-  private Joystick leftJoy;
-  private Joystick rightJoy;
   private PID leftBackPID;
   private PID leftFrontPID;
   private PID rightBackPID;

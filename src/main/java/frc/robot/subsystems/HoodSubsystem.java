@@ -4,11 +4,10 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
+
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Robot;
 import frc.robot.RobotMap.ShooterConstants;
 
 public class HoodSubsystem extends SubsystemBase {
@@ -17,7 +16,6 @@ public class HoodSubsystem extends SubsystemBase {
     public double angle;
     public CANSparkMax hoodMotor;
     public DigitalInput topSwitch, bottomSwitch;
-    private Joystick station;
     public RelativeEncoder enc;
 
     /**
@@ -31,7 +29,6 @@ public class HoodSubsystem extends SubsystemBase {
         hoodMotor.setIdleMode(IdleMode.kBrake);
         enc = hoodMotor.getEncoder();
         enc.setPosition(0);
-        station = Robot.operatorConsole;
         angle = 0;
         ready = false;
         homed = false;
