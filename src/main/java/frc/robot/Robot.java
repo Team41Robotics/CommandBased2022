@@ -96,7 +96,6 @@ public class Robot extends TimedRobot {
     @Override
     public void autonomousInit() {
         // Zero the hood
-        CommandScheduler.getInstance().schedule(new SequentialCommandGroup(new ZeroHood(), new SetHoodPosition(5)));
 
         CommandScheduler.getInstance().schedule(new InstantCommand(intake::putDown));
 
@@ -183,7 +182,6 @@ public class Robot extends TimedRobot {
         .whenPressed(
                 new SequentialCommandGroup(
                     new AutoShoot(),
-                    new PrintCommand("reached"),
                     new RunFeeder(true),
                     new WaitCommand(0.75),
                     new RunFeeder(false)

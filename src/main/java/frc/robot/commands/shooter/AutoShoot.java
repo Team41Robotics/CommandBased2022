@@ -28,7 +28,6 @@ public class AutoShoot extends CommandBase {
             (distance * ShooterConstants.HOOD_ANGLE_SLOPE) +
             ShooterConstants.HOOD_ANGLE_OFFSET;
         Robot.limelight.setLedOn(true);
-        speed = speed * .5;
         if (Robot.limelight.targetFound()) {
             Robot.shooter.setSpeed(speed / 100);
             Robot.hood.setToPosition(angle);
