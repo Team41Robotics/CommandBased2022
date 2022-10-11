@@ -70,6 +70,8 @@ public final class RobotMap {
         public static int CLIMBING_PISTON_TIME_DELAY = 500; // ms
         public static double MAX_RPM = 6380;
 
+        public static double NORMAL_MAX_SPEED = 0.65;
+
         // Measurements for the physical robot
         public static double WHEEL_CONVERSION_FACTOR = 0.000322265628223 * Math.PI;
         public static double WHEEL_RAD = 0.0762;

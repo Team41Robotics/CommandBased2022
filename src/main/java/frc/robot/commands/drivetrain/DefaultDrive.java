@@ -25,9 +25,8 @@ public class DefaultDrive extends CommandBase {
 
         double leftSpeed = MathUtil.applyDeadband(-Robot.leftJoystick.getY(), deadband);
         double rightSpeed = MathUtil.applyDeadband(-Robot.rightJoystick.getY(), deadband);
-
-        double speedOffset = (-Robot.operatorConsole.getRawAxis(0) + 1) / 2.0;
-
+        double manualOffset = (-Robot.operatorConsole.getRawAxis(0) + 1) / 2.0;
+        double speedOffset = DrivetrainConstants.NORMAL_MAX_SPEED * manualOffset;
         Robot.drivetrain.drive(leftSpeed * speedOffset, rightSpeed * speedOffset);
     }
 }
