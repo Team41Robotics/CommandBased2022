@@ -29,6 +29,7 @@ import frc.robot.RobotMap.*;
 import frc.robot.triggers.*;
 import frc.robot.RobotMap.driverStation.*;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
+import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -53,7 +54,7 @@ public class Robot extends TimedRobot {
   public static Joystick rightJoy = new Joystick(driverStationPorts.LEFT_JOY);
   public static Joystick leftJoy = new Joystick(driverStationPorts.RIGHT_JOY);
   public static Joystick secondDS = new Joystick(driverStationPorts.RIGHT_DRIVER_STATION);
-  public static JoystickButton interuptButton = new JoystickButton(secondDS, 1);
+  public static JoystickButton interuptButton = new JoystickButton(leftJoy, 2);
   public static DigitalInput BeamBreak = new DigitalInput(Auton.BEAM_BREAK_PORT);
 
   /**
@@ -180,22 +181,23 @@ public class Robot extends TimedRobot {
     new JoystickButton(rightJoy, RightJoy.INTAKE_REVERSE)
         .whileActiveOnce(new intakeReverse());
 
-    new JoystickButton(secondDS, SecondDriverStation.AUTO_SHOOTING)
+    new JoystickButton(rightJoy,2)
     .whenActive(
       new SequentialCommandGroup(
-        new AutoShoot(), 
+        new CloseShoot().withTimeout(1), 
         new PrintCommand("reached"),
         new RunFeeder(true), 
-        new WaitCommand(0.75), 
-        new RunFeeder(false)
-        ).until(interuptButton::get)
+        new WaitUntilCommand(interuptButton::get), 
+        new RunFeeder(false),
+        new StopShoot()
+        )
       );
     new JoystickButton(secondDS, 2).whenActive(new SequentialCommandGroup(new ZeroHood(), new SetHoodPosition(5)));
-    new JoystickButton(secondDS, 3).whenActive(new SetHoodPosition(5));
-    new JoystickButton(leftJoy, 3).whenActive(new RunFeeder(true));
-    new JoystickButton(leftJoy, 4).whenActive(new RunFeeder(false));
+    //new JoystickButton(secondDS, 3).whenActive(new SetHoodPosition(5));
+    //new JoystickButton(secondDS, 3).whenActive(new RunFeeder(true));
+    new JoystickButton(secondDS, 4).whenActive(new RunFeeder(false));
     new JoystickButton(secondDS, 9).whenActive(new CloseShoot());
-    new JoystickButton(leftJoy, 2).whenActive(new StopShoot());
+    //new JoystickButton(secondDS, 1).whenActive(new StopShoot());
     /*
      * new POVTrigger(45, secondDS, SecondDriverStation.CLIMBING_STATE_POV
      * .whenActive(new firstStage().until(interuptButton::get));

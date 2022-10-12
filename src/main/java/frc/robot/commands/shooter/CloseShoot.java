@@ -37,8 +37,9 @@ public class CloseShoot extends CommandBase {
   @Override
   public void execute() {
      distance = Limelight.estimateDistance();
-     speed = 32.5;
-     angle =15;
+     speed = 27.5;
+     angle =40;
+     DrivetrainSubsystem.set(0);
     Limelight.setLedOn(true);
 
 
