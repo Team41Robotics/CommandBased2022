@@ -54,7 +54,7 @@ public class Robot extends TimedRobot {
   public static Joystick rightJoy = new Joystick(driverStationPorts.LEFT_JOY);
   public static Joystick leftJoy = new Joystick(driverStationPorts.RIGHT_JOY);
   public static Joystick secondDS = new Joystick(driverStationPorts.RIGHT_DRIVER_STATION);
-  public static JoystickButton interuptButton = new JoystickButton(leftJoy, 2);
+  public static JoystickButton interuptButton = new JoystickButton(leftJoy, 4);
   public static DigitalInput BeamBreak = new DigitalInput(Auton.BEAM_BREAK_PORT);
 
   /**
@@ -161,7 +161,7 @@ public class Robot extends TimedRobot {
   private void buttonBindings() {
     Drivetrain.setDefaultCommand(new drive());
     Intake.setDefaultCommand(new RunCommand(IntakeSubsystem::run, Intake));
-    new POVTrigger(45, secondDS, SecondDriverStation.CLIMBING_STATE_POV)
+    new JoystickButton(rightJoy, 4)
         .whenActive(new SequentialCommandGroup(
             new ZeroHood(),
             new firstStage(),
