@@ -313,6 +313,6 @@ public class DrivetrainSubsystem extends SubsystemBase {
 
   public void drive(double left, double right) {
 	  setLeft(left);
-	  setLeft(right);
+	  setRight(right);
   }
 }
