@@ -39,7 +39,8 @@ public class drive extends CommandBase {
   public void execute() {
     double leftSpeed = DrivetrainSubsystem.joystickTransfer(-leftJoy.getY());
     double rightSpeed = DrivetrainSubsystem.joystickTransfer(-rightJoy.getY());
-    double speedOffset = ((Robot.secondDS.getRawAxis(0)*-1)+1)/2;
+    //double speedOffset = ((Robot.secondDS.getRawAxis(0)*-1)+1)/2;
+    double speedOffset = 0.2;
     System.out.println(speedOffset);
     if(Math.abs(leftSpeed) > (climbing ? drivetrainConstants.JOYSTICK_CLIMBING_MODE_DEADZONE : drivetrainConstants.JOYSTICK_DEADZONE)) {
         DrivetrainSubsystem.setLeft(leftSpeed*speedOffset);
