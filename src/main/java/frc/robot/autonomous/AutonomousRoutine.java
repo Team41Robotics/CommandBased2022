@@ -75,6 +75,7 @@ public class AutonomousRoutine {
 	 * Adds all values from registry to Shuffleboard
 	 */
 	private static void addAutosToShuffleboard() {
+		Autonomous.initAutos();
 		// Add commands to the autonomous command chooser
 		for (var auto : AUTO_REGISTRY.values())
 			AUTO_CHOOSER.addOption(auto.getName(), auto);

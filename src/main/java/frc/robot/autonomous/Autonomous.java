@@ -40,7 +40,7 @@ import frc.robot.commands.shooter.ZeroHood;
  * Note: Only the first command will finish the group
  */
 public class Autonomous {
-  static {
+  static public void initAutos() {
     create(
       "Four Ball Auto",
       () ->
