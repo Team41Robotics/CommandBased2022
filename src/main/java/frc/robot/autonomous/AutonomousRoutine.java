@@ -28,8 +28,8 @@ public class AutonomousRoutine {
 	/** Most basic auto already defined */
 	public static final AutonomousRoutine DO_NOTHING = new AutonomousRoutine("Do Nothing", () -> null);
 
-	private AutonomousProvider provider;
-	private String name;
+	private final AutonomousProvider provider;
+	private final String name;
 
 	private AutonomousRoutine(String name, AutonomousProvider provider) {
 		this.provider = provider;
@@ -87,7 +87,7 @@ public class AutonomousRoutine {
 		AUTO_TAB.add("Autonomous Selector", AUTO_CHOOSER);
 	}
 
-	static {
+	public static void initShuffleboard() {
 		/* Add basic auto to registry */
 		AUTO_REGISTRY.put(DO_NOTHING.name, DO_NOTHING);
 

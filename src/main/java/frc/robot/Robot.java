@@ -84,6 +84,7 @@ public class Robot extends TimedRobot {
         drivetrain.setDefaultCommand(new DefaultDrive());
 
         configureButtonBindings();
+        AutonomousRoutine.initShuffleboard();
     }
 
     /**

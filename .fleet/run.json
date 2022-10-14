@@ -1,0 +1,18 @@
+{
+  "configurations": [
+    {
+      "type": "gradle",
+      "name": "Build",
+      "tasks": [
+        "build"
+      ]
+    },
+    {
+      "type": "gradle",
+      "name": "Deploy to RoboRIO",
+      "tasks": [
+        "deploy"
+      ]
+    }
+  ]
+}
