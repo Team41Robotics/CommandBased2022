@@ -18,7 +18,6 @@ public class ShooterSubsystem extends SubsystemBase {
 
     private PID leftFalconPID, rightFalconPID;
     private TalonFX leftFalcon, rightFalcon;
-    public double speed = 0;
 
     /**
      * Intialize all components of the shooter

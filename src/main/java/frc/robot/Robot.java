@@ -82,7 +82,6 @@ public class Robot extends TimedRobot {
     @Override
     public void robotInit() {
         drivetrain.setDefaultCommand(new DefaultDrive());
-
         configureButtonBindings();
         AutonomousRoutine.initShuffleboard();
     }
@@ -170,13 +169,19 @@ public class Robot extends TimedRobot {
 
         // Zero the shooter hood
         new JoystickButton(operatorConsole, OperatorConsole.ZERO_HOOD)
-        .whenPressed(new SequentialCommandGroup(new ZeroHood(), new SetHoodPosition(5)));
+            .whenPressed(new SequentialCommandGroup(new ZeroHood(), new SetHoodPosition(5)));
 
-        // Set hood to 5 FU
-        new JoystickButton(operatorConsole, OperatorConsole.SET_HOOD_POS).whenPressed(new SetHoodPosition(5));
 
         // Line up the robot for a close shot using the limelight, and spin up shooter
-        new JoystickButton(operatorConsole, OperatorConsole.LINE_UP_NEAR_SHOT).whenPressed(new LineUpNearShot());
+        new JoystickButton(operatorConsole, OperatorConsole.LINE_UP_NEAR_SHOT)
+            .whenPressed(
+                new SequentialCommandGroup(
+                    new LineUpNearShot(),
+                    new RunFeeder(true),
+                    new WaitCommand(1))
+                    .until(interuptButton::get)
+                    .andThen(new RunFeeder(false))
+            );
 
         // Shoot a ball automatically
         new JoystickButton(operatorConsole, OperatorConsole.AUTO_SHOOTING)
@@ -184,10 +189,11 @@ public class Robot extends TimedRobot {
                 new SequentialCommandGroup(
                     new AutoShoot(),
                     new RunFeeder(true),
-                    new WaitCommand(0.75),
+                    new WaitCommand(1),
                     new RunFeeder(false)
                 )
                 .until(interuptButton::get)
+                .andThen(new RunFeeder(false))
             );
 
         /* ----- LEFT JOYSTICK ----- */
@@ -197,10 +203,6 @@ public class Robot extends TimedRobot {
         .whenPressed(new InstantCommand(intake::togglePosition, intake));
 
         // Turn the feeder on when pressed
-        new JoystickButton(leftJoystick, LeftJoystick.ENABLE_FEEDER).whenPressed(new RunFeeder(true));
-
-        // Turn the feeder off when pressed
-        new JoystickButton(leftJoystick, LeftJoystick.DISABLE_FEEDER).whenPressed(new RunFeeder(false));
 
         // Turn off shooter when pressed
         new JoystickButton(leftJoystick, LeftJoystick.DISABLE_SHOOTER).whenPressed(new DisableShooter());

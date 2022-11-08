@@ -16,6 +16,7 @@ public class ThirdStage extends CommandBase {
 
     @Override
     public void execute() {
+        System.out.println("middle climber");
         Robot.climber.setSpeed(-ClimberConstants.CLIMBING_SLOW_SPEED);
     }
 

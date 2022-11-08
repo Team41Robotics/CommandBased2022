@@ -17,6 +17,8 @@ public class DisableShooter extends CommandBase {
     public void execute() {
         Robot.shooter.setSpeed(0);
         Robot.hood.setToPosition(5);
+        Robot.shooter.runFeeder(false);
+
     }
 
     @Override

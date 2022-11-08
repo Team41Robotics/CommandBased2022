@@ -129,7 +129,7 @@ public final class RobotMap {
         public static double SHOOTER_kFF = 1.1;
         public static double SHOOTER_RAMP_TIME = 1;
 
-        public static double PID_MIN_ERR = 0.03;
+        public static double PID_MIN_ERR = 0.05;
         public static double PID_ERROR = 0.1;
     }
 
@@ -166,34 +166,27 @@ public final class RobotMap {
         public static class OperatorConsole {
 
 			// Interupt button
-			public static int INTERUPT_BUTTON = 1;
+			public static int INTERUPT_BUTTON = 4;
 
             // Do full climb routine
             public static int CLIMBING_STATE_POV = 1;
 
             // Shoot a ball automatically
-            public static int AUTO_SHOOTING = 6;
+            public static int AUTO_SHOOTING = 1;
 
             // Bring the hood all the way down to zero it
-            public static int ZERO_HOOD = 2;
+            public static int ZERO_HOOD = 3;
 
-            // Bring the hood up/down to 5 FU
-            public static int SET_HOOD_POS = 3;
+            
 
             // Line up a close shot
-            public static int LINE_UP_NEAR_SHOT = 9;
+            public static int LINE_UP_NEAR_SHOT = 2;
         }
 
         public static class LeftJoystick {
 
             // Toggle the intake up or down
             public static int INTAKE_POSITION_TOGGLE = 1;
-
-            // Turn on the feeder
-            public static int ENABLE_FEEDER = 3;
-
-            // Turn off the feeder
-            public static int DISABLE_FEEDER = 4;
 
             // Disable shooter motor
             public static int DISABLE_SHOOTER = 2;

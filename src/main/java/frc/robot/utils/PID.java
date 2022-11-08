@@ -112,7 +112,6 @@ public class PID {
         time = currentTime;
         //throws out deltaT if it is too large, happens during startup
         if (deltaT > ShooterConstants.PID_ERROR) {
-            System.out.println("deltaT is too big");
             return;
         }
 
@@ -202,6 +201,7 @@ public class PID {
      * @return Whether the PID has basically reached its target
      */
     public boolean isReady() {
+
         return err < ShooterConstants.PID_MIN_ERR;
     }
 
