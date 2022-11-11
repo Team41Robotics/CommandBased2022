@@ -31,7 +31,6 @@ public class AutoShoot extends CommandBase {
         if (Robot.limelight.targetFound()) {
             Robot.shooter.setSpeed(speed / 100);
             Robot.hood.setToPosition(angle);
-            Robot.drivetrain.alignToGoal();
         }
     }
 
@@ -42,6 +41,7 @@ public class AutoShoot extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return Robot.shooter.isReady() && Robot.hood.ready;
+        return Robot.shooter.isReady() & Robot.hood.ready & Robot.drivetrain.alignToGoal();
+ 
     }
 }

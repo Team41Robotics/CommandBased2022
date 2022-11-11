@@ -40,6 +40,10 @@ import frc.robot.subsystems.HoodSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.utils.Limelight;
+import frc.robot.utils.PhotonCamera;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.DriverStation;
+
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -53,6 +57,7 @@ import frc.robot.utils.Limelight;
 public class Robot extends TimedRobot {
 
     /* Subsystems */
+    
     public static ClimberSubsystem climber = new ClimberSubsystem();
     public static IntakeSubsystem intake = new IntakeSubsystem();
     public static DrivetrainSubsystem drivetrain = new DrivetrainSubsystem();
@@ -84,6 +89,8 @@ public class Robot extends TimedRobot {
         drivetrain.setDefaultCommand(new DefaultDrive());
         configureButtonBindings();
         AutonomousRoutine.initShuffleboard();
+        PhotonCamera.setPipeline(DriverStation.getAlliance() == Alliance.Blue);
+
     }
 
     /**
@@ -224,6 +231,7 @@ public class Robot extends TimedRobot {
 
     @Override
     public void robotPeriodic() {
+        
         /*
          * Runs the Scheduler. This is responsible for polling buttons, adding
          * newly-scheduled

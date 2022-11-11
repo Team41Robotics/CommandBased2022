@@ -102,8 +102,8 @@ public final class RobotMap {
         public static double HOOD_MIN_POS = 0;
 
         // Constants for Hood Auto Alligning
-        public static double HOOD_SPEED_SLOPE = 0.0731;
-        public static double HOOD_SPEED_OFFSET = 35.2;
+        public static double HOOD_SPEED_SLOPE = 0.0911; //changed from 0.0731
+        public static double HOOD_SPEED_OFFSET = 38.2; //changed from 35.2
         public static double HOOD_SPEED_OFFSET_INCREMENT = 0.5;
         public static double HOOD_ANGLE_SLOPE = 0.231;
         public static double HOOD_ANGLE_OFFSET = 8.96;
@@ -198,7 +198,7 @@ public final class RobotMap {
             public static int INTAKE_TOGGLE = 1;
 
             // Spit balls out of the intake
-            public static int INTAKE_REVERSE = 3;
+            public static int INTAKE_REVERSE = 2;
         }
 
         public static final class IO {

@@ -4,6 +4,8 @@ import static frc.robot.autonomous.AutonomousRoutine.create;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Robot;
@@ -15,8 +17,11 @@ import frc.robot.autonomous.commands.GoToBallCareful;
 import frc.robot.autonomous.commands.GoalAlign;
 import frc.robot.autonomous.commands.ShootBall;
 import frc.robot.commands.drivetrain.MoveForward;
+import frc.robot.commands.shooter.AutoShoot;
+import frc.robot.commands.shooter.RunFeeder;
 import frc.robot.commands.shooter.SetHoodPosition;
 import frc.robot.commands.shooter.ZeroHood;
+import frc.robot.subsystems.IntakeSubsystem;
 
 /**
  * Quick guide to Comand Groups:
@@ -40,6 +45,7 @@ import frc.robot.commands.shooter.ZeroHood;
  * Note: Only the first command will finish the group
  */
 public class Autonomous {
+  static IntakeSubsystem intake = Robot.intake;
   static public void initAutos() {
     create(
       "Four Ball Auto",
@@ -47,11 +53,13 @@ public class Autonomous {
         new SequentialCommandGroup(
           new ParallelCommandGroup(
             new SequentialCommandGroup(new AllignToBall(), new GoToBall()),
-            new SequentialCommandGroup(new ZeroHood(), new SetHoodPosition(5))
+            new SequentialCommandGroup(new ZeroHood(), new SetHoodPosition(5)),
+            new InstantCommand(intake::toggleEnabled, intake)
           ),
-          new GoalAlign(),
-          new PrepareToShoot(),
-          new ShootBall().withTimeout(0.5),
+          new AutoShoot(),
+          new RunFeeder(true),
+          new WaitCommand(2),
+          new RunFeeder(false),
           new AllignToBall(),
           new GoToBallCareful(),
           new WaitCommand(1.5),
@@ -62,8 +70,10 @@ public class Autonomous {
           new RunCommand(() -> Robot.drivetrain.stop())
           .until(() -> Robot.drivetrain.isReady()),
           new GoalAlign(),
-          new PrepareToShoot(),
-          new ShootBall().withTimeout(0.5)
+          new AutoShoot(),
+          new RunFeeder(true),
+          new WaitCommand(2),
+          new RunFeeder(false)
         )
     );
 
@@ -79,11 +89,15 @@ public class Autonomous {
                 new SequentialCommandGroup(
                     new ZeroHood(),
                     new SetHoodPosition(5)
-            )
             ),
-            new GoalAlign(),
-            new PrepareToShoot(),
-            new ShootBall().withTimeout(1.5)
+            new InstantCommand(intake::toggleEnabled, intake)
+
+            ),
+            new AutoShoot(),
+            new WaitCommand(0.5),
+            new RunFeeder(true),
+            new WaitCommand(2),
+            new RunFeeder(false)
 		  )
 	  );
   }
