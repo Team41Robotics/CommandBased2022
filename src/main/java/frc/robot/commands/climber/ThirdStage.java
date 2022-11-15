@@ -13,11 +13,16 @@ public class ThirdStage extends CommandBase {
     public ThirdStage() {
         addRequirements(Robot.climber);
     }
-
+    @Override
+    public void initialize() {
+        Robot.climber.lockFirstStage(true);
+        Robot.climber.lockSecondStage(false);
+    }
     @Override
     public void execute() {
         System.out.println("middle climber");
-        Robot.climber.setSpeed(-ClimberConstants.CLIMBING_SLOW_SPEED);
+        Robot.climber.setSpeed(-0.3);
+
     }
 
     @Override
@@ -28,6 +33,6 @@ public class ThirdStage extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return !Robot.climber.getMSwitch() || !Robot.climber.getSecondMSwitch();
+        return  !Robot.climber.getSecondMSwitch();
     }
 }

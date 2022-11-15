@@ -30,10 +30,11 @@ public class FifthStage extends CommandBase {
         System.out.println("ended");
         Robot.climber.toggleSecondStageLock();
         Robot.climber.setSpeed(0);
+        
     }
 
     @Override
     public boolean isFinished() {
-        return Robot.climber.getEncoder() > 30;
+        return Robot.climber.getEncoder() > 50;
     }
 }

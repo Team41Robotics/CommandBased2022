@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -43,6 +44,8 @@ import frc.robot.utils.Limelight;
 import frc.robot.utils.PhotonCamera;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableInstance;
 
 
 /**
@@ -78,6 +81,8 @@ public class Robot extends TimedRobot {
      * The command configured to run during auto
      */
     private Command autonomousCommand;
+    private static NetworkTable limelightTable  = NetworkTableInstance.getDefault().getTable("limelight");
+
 
     /**
      * This function is run when the robot is first started up and should be used
@@ -151,6 +156,7 @@ public class Robot extends TimedRobot {
         intake.reset();
         drivetrain.hardSet(0);
         shooter.setSpeed(0);
+        CommandScheduler.getInstance().schedule(new DisableShooter());
     }
 
     private void configureButtonBindings() {
@@ -160,15 +166,9 @@ public class Robot extends TimedRobot {
         new POVButton(operatorConsole, 45, OperatorConsole.CLIMBING_STATE_POV)
         .whenPressed(
                 new SequentialCommandGroup(
-                    new ZeroHood(),
-                    new FirstStage(),
-                    new WaitCommand(2.5),
-                    new SecondStage(),
-                    new WaitCommand(1),
+
                     new ThirdStage(),
-                    new WaitCommand(0.5),
-                    new FourthStage(),
-                    new WaitCommand(2.5),
+                    new WaitCommand(3),
                     new FifthStage()
                 )
                 .until(interuptButton::get)
@@ -191,10 +191,31 @@ public class Robot extends TimedRobot {
             );
 
         // Shoot a ball automatically
+        new JoystickButton(leftJoystick, LeftJoystick.AUTO_SHOOTING)
+        .whenPressed(
+            new ConditionalCommand(
+                new SequentialCommandGroup(
+                    new AutoShoot(),
+                    new RunFeeder(true),
+                    new WaitCommand(1),
+                    new RunFeeder(false)
+                )
+                    .until(interuptButton::get)
+                    .andThen(new RunFeeder(false)),
+                new PrintCommand("shooter disabled"),
+                () -> true));
+
+        /* ----- LEFT JOYSTICK ----- */
+
+        // Toggle intake position when pressed
+        new JoystickButton(leftJoystick, LeftJoystick.INTAKE_POSITION_TOGGLE)
+        .whenPressed(new InstantCommand(intake::togglePosition, intake));
+
         new JoystickButton(operatorConsole, OperatorConsole.AUTO_SHOOTING)
         .whenPressed(
                 new SequentialCommandGroup(
                     new AutoShoot(),
+                    new PrintCommand("working"),
                     new RunFeeder(true),
                     new WaitCommand(1),
                     new RunFeeder(false)
@@ -203,22 +224,12 @@ public class Robot extends TimedRobot {
                 .andThen(new RunFeeder(false))
             );
 
-        /* ----- LEFT JOYSTICK ----- */
-
-        // Toggle intake position when pressed
-        new JoystickButton(leftJoystick, LeftJoystick.INTAKE_POSITION_TOGGLE)
-        .whenPressed(new InstantCommand(intake::togglePosition, intake));
-
-        // Turn the feeder on when pressed
-
-        // Turn off shooter when pressed
-        new JoystickButton(leftJoystick, LeftJoystick.DISABLE_SHOOTER).whenPressed(new DisableShooter());
-
         /* ----- RIGHT JOYSTICK ----- */
 
         // Toggle intake motors when pressed
         new JoystickButton(rightJoystick, RightJoystick.INTAKE_TOGGLE)
         .whenPressed(new InstantCommand(intake::toggleEnabled, intake));
+
 
         // While held, spit out balls from the intake
         new JoystickButton(rightJoystick, RightJoystick.INTAKE_REVERSE).whileActiveOnce(new IntakeReverse());
@@ -231,7 +242,13 @@ public class Robot extends TimedRobot {
 
     @Override
     public void robotPeriodic() {
-        
+        int POVVal = operatorConsole.getPOV(0);
+        if (POVVal == 45) {
+            limelight.zoomIn();
+        } else {
+
+limelight.resetZoom();
+        }
         /*
          * Runs the Scheduler. This is responsible for polling buttons, adding
          * newly-scheduled

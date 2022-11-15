@@ -21,6 +21,7 @@ import frc.robot.commands.shooter.AutoShoot;
 import frc.robot.commands.shooter.RunFeeder;
 import frc.robot.commands.shooter.SetHoodPosition;
 import frc.robot.commands.shooter.ZeroHood;
+import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 
 /**
@@ -46,59 +47,70 @@ import frc.robot.subsystems.IntakeSubsystem;
  */
 public class Autonomous {
   static IntakeSubsystem intake = Robot.intake;
+  static DrivetrainSubsystem drive = Robot.drivetrain;
+
   static public void initAutos() {
     create(
-      "Four Ball Auto",
-      () ->
-        new SequentialCommandGroup(
-          new ParallelCommandGroup(
-            new SequentialCommandGroup(new AllignToBall(), new GoToBall()),
-            new SequentialCommandGroup(new ZeroHood(), new SetHoodPosition(5)),
-            new InstantCommand(intake::toggleEnabled, intake)
-          ),
-          new AutoShoot(),
-          new RunFeeder(true),
-          new WaitCommand(2),
-          new RunFeeder(false),
-          new AllignToBall(),
-          new GoToBallCareful(),
-          new WaitCommand(1.5),
-          new MoveForward(
-            AutonConstants.DISTANCE_FROM_HUMAN_STATION,
-            -AutonConstants.AUTON_SPEED_M_PER_S
-          ),
-          new RunCommand(() -> Robot.drivetrain.stop())
-          .until(() -> Robot.drivetrain.isReady()),
-          new GoalAlign(),
-          new AutoShoot(),
-          new RunFeeder(true),
-          new WaitCommand(2),
-          new RunFeeder(false)
-        )
-    );
+        "Four Ball Auto",
+        () -> new SequentialCommandGroup(
+            new ParallelCommandGroup(
+                new SequentialCommandGroup(new AllignToBall(), new GoToBall()),
+                new SequentialCommandGroup(new ZeroHood(), new SetHoodPosition(5)),
+                new InstantCommand(intake::toggleEnabled, intake)),
+            new AutoShoot(),
+            new RunFeeder(true),
+            new WaitCommand(2),
+            new RunFeeder(false),
+            new AllignToBall(),
+            new GoToBallCareful(),
+            new WaitCommand(1.5),
+            new MoveForward(
+                AutonConstants.DISTANCE_FROM_HUMAN_STATION,
+                AutonConstants.AUTON_SPEED_M_PER_S),
+            new RunCommand(() -> Robot.drivetrain.stop())
+                .until(() -> Robot.drivetrain.isReady()),
+            new GoalAlign(),
+            new AutoShoot(),
+            new RunFeeder(true),
+            new WaitCommand(2),
+            new RunFeeder(false)).until(() -> drive.getDanger())
+            
+            );
 
-	create(
-		"Simple Two Ball Auto",
-		() ->
-		  new SequentialCommandGroup(
-			new ParallelCommandGroup(
-                new SequentialCommandGroup(    
+    create(
+        "Simple Two Ball Auto",
+        () -> new SequentialCommandGroup(
+            new ParallelCommandGroup(
+                new SequentialCommandGroup(
                     new AllignToBall(),
-                    new GoToBall()
-            ), 
+                    new GoToBall()),
                 new SequentialCommandGroup(
                     new ZeroHood(),
-                    new SetHoodPosition(5)
-            ),
-            new InstantCommand(intake::toggleEnabled, intake)
+                    new SetHoodPosition(5)),
+                new InstantCommand(intake::toggleEnabled, intake)
 
-            ),
+            ).withTimeout(4),
             new AutoShoot(),
             new WaitCommand(0.5),
             new RunFeeder(true),
             new WaitCommand(2),
-            new RunFeeder(false)
-		  )
-	  );
+            new RunFeeder(false)));
+
+    create(
+        "Taxi Shoot",
+        () -> new SequentialCommandGroup(
+            new ParallelCommandGroup(
+                new MoveForward(40, 1),
+                new SequentialCommandGroup(
+                  new ZeroHood(),
+                  new SetHoodPosition(5))
+            )
+
+        .withTimeout(4),
+        new PrepareToShoot(),
+        new WaitCommand(0.5),
+        new RunFeeder(true),
+        new WaitCommand(2),
+        new RunFeeder(false)));
   }
 }

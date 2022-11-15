@@ -63,7 +63,7 @@ public final class RobotMap {
         public static double CLIMBING_DRIVING_SPEED_OFFSET = 4e-4;
         public static double CLIMBING_MAX_SPEED = 0.85;
         public static double CLIMBING_SPEED_SECOND_STAGE = 0.6;
-        public static double CLIMBING_SLOW_SPEED = 0.4;
+        public static double CLIMBING_SLOW_SPEED = 0.;
         public static double JOYSTICK_CURVE_POWER = 3; // x^3 function
         public static double JOYSTICK_DEADZONE = 0.1;
         public static double JOYSTICK_CLIMBING_MODE_DEADZONE = 0.001;
@@ -103,7 +103,7 @@ public final class RobotMap {
 
         // Constants for Hood Auto Alligning
         public static double HOOD_SPEED_SLOPE = 0.0911; //changed from 0.0731
-        public static double HOOD_SPEED_OFFSET = 38.2; //changed from 35.2
+        public static double HOOD_SPEED_OFFSET = 37.2; //changed from 35.2
         public static double HOOD_SPEED_OFFSET_INCREMENT = 0.5;
         public static double HOOD_ANGLE_SLOPE = 0.231;
         public static double HOOD_ANGLE_OFFSET = 8.96;
@@ -181,6 +181,9 @@ public final class RobotMap {
 
             // Line up a close shot
             public static int LINE_UP_NEAR_SHOT = 2;
+
+            public static int IGNORE_JOY_SHOOT = 5;
+            public static int IGNORE_OFFSET = 6;
         }
 
         public static class LeftJoystick {
@@ -189,7 +192,7 @@ public final class RobotMap {
             public static int INTAKE_POSITION_TOGGLE = 1;
 
             // Disable shooter motor
-            public static int DISABLE_SHOOTER = 2;
+            public static int AUTO_SHOOTING = 2;
         }
 
         public static class RightJoystick {

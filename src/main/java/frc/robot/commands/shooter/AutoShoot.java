@@ -17,8 +17,23 @@ public class AutoShoot extends CommandBase {
 
     public AutoShoot() {
         addRequirements(Robot.hood, Robot.drivetrain, Robot.shooter);
+        
     }
 
+    @Override
+    public void initialize() {
+        distance = Robot.limelight.estimateDistance();
+        speed = (distance * ShooterConstants.HOOD_SPEED_SLOPE) + ShooterConstants.HOOD_SPEED_OFFSET;
+        angle =
+            (distance * distance * ShooterConstants.HOOD_ANGLE_CURVE) +
+            (distance * ShooterConstants.HOOD_ANGLE_SLOPE) +
+            ShooterConstants.HOOD_ANGLE_OFFSET;
+        Robot.limelight.setLedOn(true);
+        if (Robot.limelight.targetFound()) {
+            Robot.shooter.setSpeed(speed / 100);
+            Robot.hood.setToPosition(angle);
+        }
+    }
     @Override
     public void execute() {
         distance = Robot.limelight.estimateDistance();

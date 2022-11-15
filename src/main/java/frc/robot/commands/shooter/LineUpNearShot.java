@@ -18,7 +18,7 @@ public class LineUpNearShot extends CommandBase {
 
     @Override
     public void execute() {
-        speed = 32.5;
+        speed = 40.5;
         angle = 15;
 
         Robot.shooter.setSpeed(speed / 100);

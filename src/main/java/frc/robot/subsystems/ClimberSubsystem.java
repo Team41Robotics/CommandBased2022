@@ -80,7 +80,7 @@ public class ClimberSubsystem extends SubsystemBase {
         secondStageGearLock.set(DoubleSolenoid.Value.kForward);
         secondStageRelease.set(DoubleSolenoid.Value.kForward);
         firstStageGearLock.set(DoubleSolenoid.Value.kReverse);
-        gearShifter.set(Value.kForward);
+        gearShifter.set(Value.kReverse);
 
         firstStageLeftSwitch = new DigitalInput(ClimberConstants.FIRST_STAGE_LIMIT_SWITCH_L);
         firstStageRightSwitch = new DigitalInput(ClimberConstants.FIRST_STAGE_LIMIT_SWITCH_R);
@@ -97,7 +97,7 @@ public class ClimberSubsystem extends SubsystemBase {
         secondStageGearLock.set(DoubleSolenoid.Value.kForward);
         secondStageRelease.set(DoubleSolenoid.Value.kForward);
         firstStageGearLock.set(DoubleSolenoid.Value.kReverse);
-        gearShifter.set(Value.kForward);
+        gearShifter.set(Value.kReverse);
         // firstStageUp = false;
         // secondStageUp = false;
         climbing = false;
@@ -213,6 +213,9 @@ public class ClimberSubsystem extends SubsystemBase {
         return secondStageSecondSwitch.get();
     }
 
+    public void brake(){
+        
+    }
     /**
      * Get the value of the first switch for the middle climber
      *
